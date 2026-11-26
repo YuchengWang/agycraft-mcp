@@ -37,16 +37,6 @@ export interface TokenWindowAnalysis {
     output_cost_share_pct: number;
     note: string;
   };
-  implicit_cache_check: {
-    threshold_tokens: 4096;
-    multi_turn_new_tokens_min: 2050;
-    turns_below_threshold: number;
-    turns_above_threshold: number;
-    below_threshold_pct: number;
-    eligible_for_implicit_cache: boolean;
-    official_source_url: string;
-    guidance: string;
-  };
   by_model: ModelUsageBreakdown[];
 }
 
@@ -60,8 +50,6 @@ const DEFAULT_PRICING = {
   input_per_1m_usd: 1.25,
   output_per_1m_usd: 10.0,
 };
-
-const IMPLICIT_CACHE_MIN_TOKENS = 4096;
 
 function findModelPricing(
   modelId: string,
@@ -142,8 +130,6 @@ export function analyzeTokenWindow(
   let rateLimit429Count = 0;
   let peakCtxPct: number | null = null;
   let oldestMs: number | null = null;
-  let belowCacheThreshold = 0;
-  let aboveCacheThreshold = 0;
 
   const sessions = new Set<string>();
   const modelMap = new Map<
@@ -177,14 +163,6 @@ export function analyzeTokenWindow(
         peakCtxPct === null
           ? r.context_used_pct
           : Math.max(peakCtxPct, r.context_used_pct);
-    }
-
-    if (r.input_tokens > 0) {
-      if (r.input_tokens < IMPLICIT_CACHE_MIN_TOKENS) {
-        belowCacheThreshold += 1;
-      } else {
-        aboveCacheThreshold += 1;
-      }
     }
 
     const agg = modelMap.get(r.model) ?? { requests: 0, input: 0, output: 0 };
@@ -230,27 +208,12 @@ export function analyzeTokenWindow(
   const outputCostSharePct =
     totalUsd > 0 ? Math.round((totalOutputUsd / totalUsd) * 1000) / 10 : 0;
 
-  const totalTokenTurns = belowCacheThreshold + aboveCacheThreshold;
-  const belowPct =
-    totalTokenTurns > 0
-      ? Math.round((belowCacheThreshold / totalTokenTurns) * 1000) / 10
-      : 0;
-
   const risk = assessSharedBucketRisk(
     options.window,
     totalTokens,
     rateLimit429Count,
     byModel,
   );
-
-  const cacheGuidance =
-    filtered.length === 0
-      ? "No local usage records in this window yet. Run `npx agycraft-mcp setup` to enable numeric-only local logging. (Gemini 4 implicit cache requires >=4,096 min input tokens + >=2,050 new tokens per turn to cache the full previous request.)"
-      : totalTokenTurns === 0
-        ? `Local hook events (${filtered.length} record(s)) were recorded without token/model fields, so implicit cache eligibility cannot be measured locally. Refer to the official AGY/CLI quota UI for authoritative remaining %, or enable Gemini CLI OTel for exact local token counts.`
-        : belowPct >= 60
-          ? `${belowPct}% of turns had <4,096 input tokens and cannot trigger Gemini implicit KV caching. Keep stable system/context prefix >=4,096 tokens (and >=2,050 new tokens per turn for multi-turn full-request caching).`
-          : "Most turns exceed the 4,096-token implicit cache floor; for multi-turn sessions, >=2,050 new tokens per turn caches the full previous request — keep prompt prefixes stable.";
 
   return {
     window: options.window,
@@ -273,16 +236,6 @@ export function analyzeTokenWindow(
       estimated_total_usd: round4(totalUsd),
       output_cost_share_pct: outputCostSharePct,
       note: "Thinking tokens are billed at output rates (typically 4x–8x input cost). High output cost share signals a Thinking-budget or model-tier optimization opportunity.",
-    },
-    implicit_cache_check: {
-      threshold_tokens: IMPLICIT_CACHE_MIN_TOKENS,
-      multi_turn_new_tokens_min: 2050,
-      turns_below_threshold: belowCacheThreshold,
-      turns_above_threshold: aboveCacheThreshold,
-      below_threshold_pct: belowPct,
-      eligible_for_implicit_cache: aboveCacheThreshold > 0,
-      official_source_url: "https://aistudio.google.com/docs/caching",
-      guidance: cacheGuidance,
     },
     by_model: byModel,
   };

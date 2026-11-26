@@ -214,7 +214,6 @@ describe("MCP Server (5 tools end-to-end)", () => {
       expect(usageJson.total_tokens).toBe(0);
       expect(usageJson.data_mode).toBe("hook_events_without_tokens");
       expect(usageJson.usage_note).toContain("without token or model fields");
-      expect(usageJson.implicit_cache_check.guidance).not.toContain("No local usage records");
 
       const status = await c.callTool({
         name: "get_ecosystem_status",

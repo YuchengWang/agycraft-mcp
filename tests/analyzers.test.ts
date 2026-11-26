@@ -29,7 +29,7 @@ function makeRecord(overrides: Partial<UsageRecord> = {}): UsageRecord {
 describe("Analyzers", () => {
   const nowMs = Date.parse("2026-11-26T03:00:00.000Z");
 
-  it("computes 5h token window stats, Thinking output cost share, and <4,096 cache threshold", () => {
+  it("computes 5h token window stats and Thinking output cost share", () => {
     const records: UsageRecord[] = [
       makeRecord({ input_tokens: 2000, output_tokens: 3000, model: "gemini-4-neon" }),
       makeRecord({ input_tokens: 3000, output_tokens: 2500, model: "gemini-4-neon" }),
@@ -42,10 +42,6 @@ describe("Analyzers", () => {
     expect(res.record_count).toBe(3);
     expect(res.total_input_tokens).toBe(15000);
     expect(res.total_output_tokens).toBe(6000);
-    expect(res.implicit_cache_check.turns_below_threshold).toBe(2);
-    expect(res.implicit_cache_check.turns_above_threshold).toBe(1);
-    expect(res.implicit_cache_check.multi_turn_new_tokens_min).toBe(2050);
-    expect(res.implicit_cache_check.official_source_url).toBe("https://aistudio.google.com/docs/caching");
     expect(res.thinking_cost_estimate.output_cost_share_pct).toBeGreaterThan(50);
   });
 
@@ -60,8 +56,6 @@ describe("Analyzers", () => {
     expect(res.total_tokens).toBe(0);
     expect(res.data_mode).toBe("hook_events_without_tokens");
     expect(res.usage_note).toContain("without token or model fields");
-    expect(res.implicit_cache_check.guidance).toContain("without token/model fields");
-    expect(res.implicit_cache_check.guidance).not.toContain("No local usage records");
   });
 
   it("detects snowball, heavy model mismatch, Thinking downgrade, cache miss, and infinite loop", () => {
@@ -97,7 +91,6 @@ describe("Analyzers", () => {
     const categories = report.recommendations.map((r) => r.category);
     expect(categories).toContain("long_session_snowball");
     expect(categories).toContain("heavy_model_mismatch");
-    expect(categories).toContain("implicit_cache_miss");
     expect(categories).toContain("infinite_loop_warning");
     expect(report.healthy).toBe(false);
   });

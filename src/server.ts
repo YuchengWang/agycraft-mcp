@@ -57,7 +57,7 @@ export function createAgycraftServer(deps: ServerDependencies = {}): McpServer {
   // 1. analyze_token_usage
   server.tool(
     "analyze_token_usage",
-    "Analyze local 5h/24h/7d token usage, shared-bucket exhaustion risk, Thinking output cost share, and <4,096 implicit KV cache threshold. 100% local numeric metadata only.",
+    "Analyze local 5h/24h/7d token usage, shared-bucket exhaustion risk, and Thinking output cost share. 100% local numeric metadata only.",
     {
       window: z.enum(["5h", "24h", "7d"]).default("5h"),
       product: z.enum(["agy", "gemini-cli", "all"]).default("all"),
@@ -117,7 +117,7 @@ export function createAgycraftServer(deps: ServerDependencies = {}): McpServer {
   // 2. get_saving_recommendations
   server.tool(
     "get_saving_recommendations",
-    "Detect quota-burning antipatterns (long-session snowball, heavy model mismatch, Thinking downgrade opportunity, <4,096 cache misses, and autonomous failure loops) from local numeric usage and optional structural transcript metadata.",
+    "Detect quota-burning antipatterns (long-session snowball, heavy model mismatch, Thinking downgrade opportunity, and autonomous failure loops) from local numeric usage and optional structural transcript metadata.",
     {
       window: z.enum(["24h", "7d"]).default("24h"),
       transcript_path: z

@@ -8,7 +8,6 @@ export interface SavingRecommendation {
     | "long_session_snowball"
     | "heavy_model_mismatch"
     | "thinking_downgrade"
-    | "implicit_cache_miss"
     | "infinite_loop_warning";
   title: string;
   evidence: string;
@@ -130,24 +129,7 @@ export function analyzeAntipatterns(
     });
   }
 
-  // 4. Implicit KV cache miss (<4,096 input tokens)
-  const turnsWithInput = filtered.filter((r) => r.input_tokens > 0);
-  const below4096 = turnsWithInput.filter((r) => r.input_tokens < 4096);
-  if (turnsWithInput.length >= 5 && below4096.length / turnsWithInput.length >= 0.6) {
-    const pct = Math.round((below4096.length / turnsWithInput.length) * 100);
-    recs.push({
-      id: "implicit_cache_miss",
-      severity: "low",
-      category: "implicit_cache_miss",
-      title: "Frequent turns below 4,096-token implicit cache threshold",
-      evidence: `${below4096.length}/${turnsWithInput.length} (${pct}%) turns had <4,096 input tokens.`,
-      action:
-        "Batch related small questions into a single session with a stable >=4,096-token prefix (>=2,050 new tokens per turn for multi-turn full-request caching per aistudio.google.com/docs/caching), and avoid dynamic timestamps at prompt start.",
-      estimated_savings_pct: "15–30%",
-    });
-  }
-
-  // 5. Agent infinite loop warning (from pure structural transcript metadata)
+  // 4. Agent infinite loop warning (from pure structural transcript metadata)
   if (options?.transcriptMeta?.loop_detected) {
     const tool = options.transcriptMeta.consecutive_failure_tool_type ?? "tool";
     const streak = options.transcriptMeta.max_consecutive_tool_failures;
