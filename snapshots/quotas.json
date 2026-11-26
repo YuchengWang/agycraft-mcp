@@ -1,0 +1,280 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-26T03:55:52.857Z",
+  "reset_rules": {
+    "pt_midnight_timezone": "America/Los_Angeles",
+    "rolling_window_hours": 5,
+    "weekly_cap_days": 7,
+    "implicit_cache_min_tokens": 4096,
+    "multi_turn_cache_min_new_tokens": 2050,
+    "notes": "Gemini API RPD limits reset at 00:00 Pacific Time (America/Los_Angeles) and apply per GCP project (not per API key). Priority inference defaults to 0.3x standard rate limits. Implicit KV caching requires >= 4,096 base tokens (2,048 on 2.5), and Gemini 4 multi-turn loops require >= 2,050 new tokens per turn to cache the full prior request."
+  },
+  "reset_rules_notes_zh": "Gemini API 每日请求上限（RPD）按太平洋时间午夜 00:00 PT 重置，且按 GCP 项目（而非 API Key）统计。Priority 推理默认为标准限流的 0.3x。隐式缓存要求前缀 >= 4,096 Token（2.5 为 2,048），Gemini 4 多轮循环还要求每轮新增 >= 2,050 Token 才能完整缓存上一轮请求。",
+  "plans": [
+    {
+      "id": "free",
+      "provider": "google",
+      "name": "Free Tier (AGY Free / AI Studio Free)",
+      "name_zh": "Free 免费档（AGY Free / AI Studio Free）",
+      "price_monthly_usd": 0,
+      "products": [
+        "gemini-web",
+        "agy",
+        "ai-studio"
+      ],
+      "rolling_5h_window": "Weekly refresh in AGY; RPM/TPM/RPD enforced per project in AI Studio",
+      "rolling_5h_window_zh": "AGY 免费版按周刷新配额；AI Studio 免费版按项目限制 RPM/TPM/RPD",
+      "weekly_7d_cap": "Meaningful weekly quota & weekly rate limit in AGY (Free & Google AI Plus)",
+      "weekly_7d_cap_zh": "AGY Free & Google AI Plus 享基础周配额并受周速率上限约束",
+      "daily_pt_reset": "00:00 PT (America/Los_Angeles) for AI Studio Free RPD",
+      "daily_pt_reset_zh": "AI Studio 免费版每日 RPD 于太平洋时间 00:00 PT 重置",
+      "shared_bucket": {
+        "is_shared": true,
+        "scope": "AGY Free & Plus: Gemini 4 Hydrogen (default) + 3.8 Flash until Nov 30, 2026",
+        "notes": "AI Studio Free content may be used to improve Google products; Hydrogen, 3.8 Flash, and 3.5 Flash-Lite are available free.",
+        "notes_zh": "注意 AI Studio 免费档数据可能用于改进产品；Hydrogen、3.8 Flash 与 3.5 Flash-Lite 均提供免费额度。"
+      },
+      "ai_credits": "None (overages unavailable)",
+      "ai_credits_zh": "无（不支持 AI Credits 超额计费）",
+      "model_access": [
+        "gemini-4-hydrogen",
+        "gemini-3-8-flash",
+        "gemini-3-5-flash-lite"
+      ],
+      "best_strategy": "Use Gemini 4 Hydrogen for coding on Free AGY and 3.5 Flash-Lite / 3.8 Flash for high-RPM API experiments.",
+      "best_strategy_zh": "AGY 免费版主力使用 Gemini 4 Hydrogen；高频 API 实验优先用 3.5 Flash-Lite / 3.8 Flash。",
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "official_source_url": "https://antigravity.google/docs/plans/"
+    },
+    {
+      "id": "ai-pro",
+      "provider": "google",
+      "name": "Paid Google AI Pro (AGY & Gemini Pro)",
+      "name_zh": "付费 Google AI Pro（AGY 与 Gemini Pro）",
+      "price_monthly_usd": 20,
+      "products": [
+        "gemini-web",
+        "agy",
+        "gemini-cli"
+      ],
+      "rolling_5h_window": "High quota refreshed every 5 hours until weekly limit is reached",
+      "rolling_5h_window_zh": "每 5 小时刷新高额配额，直至触及 7 天周上限",
+      "weekly_7d_cap": "Higher 7-day rolling weekly rate limit across AGY & Gemini Pro",
+      "weekly_7d_cap_zh": "更高的 7 天滚动周上限（与 5 小时窗口叠加）",
+      "daily_pt_reset": "5h/7d rolling windows in AGY; 00:00 PT for linked API Free RPD",
+      "daily_pt_reset_zh": "AGY 采用 5h + 7d 滚动窗口；关联 API 免费额度按 00:00 PT 重置",
+      "shared_bucket": {
+        "is_shared": true,
+        "scope": "Shared across Neon (default), Carbon, Hydrogen (Argon bucket removed Nov 23; Argon & 3.8 Flash leave Nov 30)",
+        "notes": "Supports Orchestrator (Neon planner + Hydrogen executor) and AI Credit Overages (Never or Always).",
+        "notes_zh": "支持 Orchestrator（Neon 规划 + Hydrogen 执行）与 AI Credits 超额开关（Never / Always）。"
+      },
+      "ai_credits": "Optional AI Credit Overages (Never / Always at Gemini Enterprise rates)",
+      "ai_credits_zh": "可选开启 AI Credits 超额付费（Never / Always，按 Gemini Enterprise 标准计费）",
+      "model_access": [
+        "gemini-4-neon",
+        "gemini-4-carbon",
+        "gemini-4-hydrogen"
+      ],
+      "best_strategy": "Use Neon Planner + Hydrogen Executor (~45% savings) and switch models mid-turn (v2.35.2+) when edits turn mechanical.",
+      "best_strategy_zh": "启用 Neon 规划 + Hydrogen 执行（省约 45%），并在常规修改阶段用 v2.35.2+ 轮次中切换降档。",
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "official_source_url": "https://antigravity.google/docs/plans/"
+    },
+    {
+      "id": "ai-ultra",
+      "provider": "google",
+      "name": "Google AI Ultra",
+      "name_zh": "Google AI Ultra",
+      "price_monthly_usd": 249.99,
+      "products": [
+        "gemini-web",
+        "agy",
+        "gemini-cli"
+      ],
+      "rolling_5h_window": "Highest quota refreshed every 5 hours + priority capacity",
+      "rolling_5h_window_zh": "最高 5 小时刷新配额 + 峰值优先容量保障",
+      "weekly_7d_cap": "Highest 7-day weekly rate limits across frontier & partner models",
+      "weekly_7d_cap_zh": "全系前沿与合作模型最高 7 天周速率上限",
+      "daily_pt_reset": "Priority 5h/7d rolling windows",
+      "daily_pt_reset_zh": "优先级 5h / 7d 滚动窗口",
+      "shared_bucket": {
+        "is_shared": true,
+        "scope": "Full frontier Gemini 4 (Neon/Carbon/Hydrogen) + partner models",
+        "notes": "Supports AI Credit Overages (Never / Always) for uninterrupted peak sprints.",
+        "notes_zh": "支持 AI Credits 超额续杯，保障高强度研发不中断。"
+      },
+      "ai_credits": "Expanded monthly AI credits + Always/Never overage toggle",
+      "ai_credits_zh": "高额月度 AI Credits 池 + Always/Never 超额开关",
+      "model_access": [
+        "gemini-4-neon",
+        "gemini-4-carbon",
+        "gemini-4-hydrogen"
+      ],
+      "best_strategy": "Run Neon/Carbon with high/xhigh thinking on hard problems while still enforcing .geminiignore and stable >= 4,096-token prefixes.",
+      "best_strategy_zh": "复杂任务可放开使用 Neon/Carbon + high/xhigh 思考，同时保持 .geminiignore 与 >= 4,096 Token 稳定前缀。",
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "official_source_url": "https://antigravity.google/docs/plans/"
+    },
+    {
+      "id": "api-tier-1",
+      "provider": "google",
+      "name": "Gemini API Tier 1 (Pay-as-you-go)",
+      "name_zh": "Gemini API Tier 1（绑定计费起步档）",
+      "price_monthly_usd": null,
+      "products": [
+        "ai-studio",
+        "gemini-cli"
+      ],
+      "rolling_5h_window": "10-minute spend rate limit: $10 | Priority inference: 0.3x standard RPM/TPM",
+      "rolling_5h_window_zh": "10 分钟消费速率上限 $10；Priority 推理默认为标准限流的 0.3x",
+      "weekly_7d_cap": "Billing tier monthly cap: $250 (Paid tier: content NOT used to improve products)",
+      "weekly_7d_cap_zh": "计费档月度上限 $250（付费档数据不用于模型训练）",
+      "daily_pt_reset": "00:00 PT (America/Los_Angeles) for RPD",
+      "daily_pt_reset_zh": "RPD 于太平洋时间 00:00 PT 重置",
+      "shared_bucket": {
+        "is_shared": false,
+        "scope": "Per-project RPM, input TPM, and RPD; Batch API gives 50% cost discount",
+        "notes": "Active GCP billing account linked. Batch queue cap: 5M tokens (Gemini 4 Neon/Carbon) / 3M tokens (Hydrogen/3.8 Flash).",
+        "notes_zh": "绑定有效 GCP 计费账户即可升级 Tier 1；Batch API 享 5 折优惠，排队上限 5M/3M Token。"
+      },
+      "ai_credits": "GCP Cloud Billing credits if eligible",
+      "ai_credits_zh": "支持符合条件的 GCP 赠金抵扣",
+      "model_access": [
+        "gemini-4-carbon",
+        "gemini-4-neon",
+        "gemini-4-hydrogen",
+        "gemini-3-8-flash",
+        "genie-4"
+      ],
+      "best_strategy": "Watch the $10 / 10-min spend limit during bursts; keep prefixes >= 4,096 tokens for automatic implicit caching.",
+      "best_strategy_zh": "突发高并发时注意 10 分钟 $10 消费熔断；保持前缀 >= 4,096 Token 自动触发隐式缓存。",
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "official_source_url": "https://aistudio.google.com/docs/rate-limits"
+    },
+    {
+      "id": "api-tier-2-3",
+      "provider": "google",
+      "name": "Gemini API Tier 2 & Tier 3 (Scaled Production)",
+      "name_zh": "Gemini API Tier 2 / Tier 3（规模化生产档）",
+      "price_monthly_usd": null,
+      "products": [
+        "ai-studio",
+        "vertex-ai"
+      ],
+      "rolling_5h_window": "10-minute spend rate limit: $200 | Tier 2: $100+ paid & 3d; Tier 3: $1,000+ paid & 30d",
+      "rolling_5h_window_zh": "10 分钟消费上限提升至 $200（Tier 2 需累计消费 $100+ 且满 3 天；Tier 3 需 $1,000+ 且满 30 天）",
+      "weekly_7d_cap": "Billing tier cap: $2,000 (Tier 2) / $20,000-$100,000+ (Tier 3)",
+      "weekly_7d_cap_zh": "月度账单上限：$2,000（Tier 2）/ $20,000-$100,000+（Tier 3）",
+      "daily_pt_reset": "00:00 PT (America/Los_Angeles) for RPD",
+      "daily_pt_reset_zh": "RPD 于太平洋时间 00:00 PT 重置",
+      "shared_bucket": {
+        "is_shared": false,
+        "scope": "Per-project RPM/TPM/RPD; 100 concurrent Batch jobs (2GB input / 20GB storage)",
+        "notes": "No BYOK/BYO-endpoint in AGY; production API scale belongs on Tier 2/3 or Vertex AI.",
+        "notes_zh": "AGY 不支持 BYOK；生产级高并发与 Batch 作业（最多 100 个并发、2GB 单文件）应运行在 Tier 2/3。"
+      },
+      "ai_credits": "GCP Billing / Committed Use",
+      "ai_credits_zh": "支持 GCP 计费与企业承诺消费",
+      "model_access": [
+        "gemini-4-carbon",
+        "gemini-4-neon",
+        "gemini-4-hydrogen",
+        "gemini-3-8-flash",
+        "genie-4"
+      ],
+      "best_strategy": "Use Tool Retrieval (defer_loading) in Interactions API and Batch API (50% off) for async jobs.",
+      "best_strategy_zh": "在 Interactions API 启用按需工具加载（defer_loading），异步大批量任务走 5 折 Batch API。",
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "official_source_url": "https://aistudio.google.com/docs/rate-limits"
+    },
+    {
+      "id": "antigravity-cli-credits",
+      "provider": "antigravity",
+      "name": "Antigravity CLI & /credits",
+      "name_zh": "Antigravity CLI 与 /credits 额度",
+      "price_monthly_usd": 20,
+      "products": [
+        "agy",
+        "gemini-cli"
+      ],
+      "rolling_5h_window": "Tracks workspace 5h rolling window; inspect live via `/usage`",
+      "rolling_5h_window_zh": "共享工作区 5 小时滚动窗口，可在 CLI 内直接运行 `/usage` 查看",
+      "weekly_7d_cap": "Shared 7-day weekly ceiling; optional AI Credit overages via `/credits`",
+      "weekly_7d_cap_zh": "共享 7 天周上限，可通过 `/credits` 管理 AI Credits 超额消费",
+      "daily_pt_reset": "Rolling 5h/7d; supports `--model gemini-4-neon-xhigh` effort suffix",
+      "daily_pt_reset_zh": "采用 5h/7d 滚动刷新；支持 `--model gemini-4-neon-xhigh` 等思考档位后缀",
+      "shared_bucket": {
+        "is_shared": true,
+        "scope": "Unified Neon / Carbon / Hydrogen bucket (No BYOK/BYO-endpoint)",
+        "notes": "Use `npx agycraft-mcp` with local hooks/OTel (`logPrompts: false`) to track burn without touching OAuth credentials.",
+        "notes_zh": "不支持 BYOK；可配合 `npx agycraft-mcp` 读取本地 Hook/OTel 纯数值指标，零隐私上传。"
+      },
+      "ai_credits": "Managed via https://antigravity.google/docs/cli/credits/",
+      "ai_credits_zh": "详见官方指南 antigravity.google/docs/cli/credits/",
+      "model_access": [
+        "gemini-4-neon",
+        "gemini-4-carbon",
+        "gemini-4-hydrogen"
+      ],
+      "best_strategy": "Monitor `/usage` and `agycraft-mcp` warnings to catch <4,096 cache misses and retry loops early.",
+      "best_strategy_zh": "结合 `/usage` 与 `agycraft-mcp` 及时发现 <4,096 缓存未命中与代理死循环。",
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "official_source_url": "https://antigravity.google/docs/cli/credits/"
+    }
+  ],
+  "saving_tips": [
+    {
+      "id": "keep-cache-prefix-stable",
+      "title": "Keep Static Prefixes >= 4,096 Tokens & Add >= 2,050 New Tokens on Multi-Turn Loops",
+      "title_zh": "保持静态前缀 >= 4,096 Token，多轮循环每轮新增 >= 2,050 Token",
+      "impact": "Up to 95% implicit cache discount ($0.15 vs $3.00 on Neon) & +28% AGY tasks/quota",
+      "impact_zh": "最高享 95% 隐式缓存折扣（Neon $0.15 vs $3.00），AGY 同配额多完成 28% 任务",
+      "detail": "Official docs confirm Gemini 4 requires >= 4,096 tokens for implicit caching, and multi-turn loops cache the full prior request only when >= 2,050 new tokens are added.",
+      "detail_zh": "官方文档确认 Gemini 4 隐式缓存起步门槛为 4,096 Token，且多轮 Agent 循环需新增至少 2,050 Token（含输出/思考/工具结果）才能完整缓存上一轮请求。"
+    },
+    {
+      "id": "orchestrator-split",
+      "title": "Use Orchestrator: Neon/Carbon Planner + Hydrogen Executor",
+      "title_zh": "启用 Orchestrator：Neon/Carbon 规划 + Hydrogen 执行",
+      "impact": "~45% shared 5h/7d bucket savings",
+      "impact_zh": "节省约 45% 5h/7d 共享配额",
+      "detail": "Neon is 2x the API cost of Hydrogen ($3/$15 vs $1.50/$7.50) and carries ~2.6x higher bucket weight. Let Neon write the plan, then execute with Hydrogen.",
+      "detail_zh": "Neon 单价为 Hydrogen 的 2 倍（$3/$15 vs $1.50/$7.50），共享桶权重高约 2.6 倍。让 Neon 一次性产出方案，再交由 Hydrogen 执行。"
+    },
+    {
+      "id": "thinking-billed-as-output",
+      "title": "Remember Thinking Tokens Are Billed at Output Rates (5x Input)",
+      "title_zh": "牢记 Thinking 思考 Token 按输出单价计费（输入单价的 5 倍）",
+      "impact": "30-60% lower output-token burn",
+      "impact_zh": "降低 30%-60% 输出计费消耗",
+      "detail": "Official pricing explicitly states 'Output price (including thinking tokens)'. Reserve `high`/`xhigh` for hard architecture and drop to `low` for routine edits.",
+      "detail_zh": "官方计价明确标注 Output 价格包含 Thinking Token。仅在架构与疑难排错开启 `high`/`xhigh`，常规编辑降至 `low`。"
+    },
+    {
+      "id": "tool-retrieval-defer",
+      "title": "Use Tool Retrieval (defer_loading) for Large MCP Toolsets",
+      "title_zh": "大型 MCP 工具集启用 Tool Retrieval（defer_loading）按需加载",
+      "impact": "Eliminates sending dozens of unused tool schemas on every turn",
+      "impact_zh": "避免每轮重复发送数十个闲置工具 Schema",
+      "detail": "In Interactions API (Gemini 3.6+ / Gemini 4), set `defer_loading: true` with `tool_search` so schemas load only when needed.",
+      "detail_zh": "在 Interactions API（支持 Gemini 3.6+ 与 Gemini 4）中配置 `defer_loading: true` 与 `tool_search`，仅在需要时加载工具定义。"
+    },
+    {
+      "id": "compact-and-geminiignore",
+      "title": "Run /compact Early & Maintain .geminiignore",
+      "title_zh": "尽早执行 /compact 并维护 .geminiignore",
+      "impact": "Prevents context snowballing & 504 timeouts",
+      "impact_zh": "防止上下文雪球式膨胀与 504 超时",
+      "detail": "Exclude `node_modules/`, lockfiles, and build outputs. Run `npx agycraft-mcp doctor` to audit global rule token bloat.",
+      "detail_zh": "屏蔽 `node_modules/`、锁文件与构建目录，并用 `npx agycraft-mcp doctor` 审计全局规则文件体积。"
+    }
+  ],
+  "official_source_urls": [
+    "https://aistudio.google.com/docs/rate-limits",
+    "https://aistudio.google.com/docs/pricing",
+    "https://aistudio.google.com/docs/caching",
+    "https://antigravity.google/docs/plans/",
+    "https://antigravity.google/docs/cli/credits/"
+  ]
+}

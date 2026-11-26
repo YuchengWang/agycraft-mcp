@@ -1,0 +1,47 @@
+{
+  "name": "agycraft-mcp",
+  "version": "0.1.0",
+  "description": "Privacy-first local MCP server & CLI doctor for Antigravity (AGY) and Gemini CLI — token usage audit, KV cache diagnostics, error attribution, and model selection.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "bin": {
+    "agycraft-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "snapshots",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "antigravity",
+    "gemini-cli",
+    "token-audit",
+    "developer-tools",
+    "modelcraft",
+    "agycraft"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.0.0"
+  }
+}

@@ -1,0 +1,326 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-26T03:55:52.857Z",
+  "entries": [
+    {
+      "id": "agy-2026-11-25-v2-35-2-midturn-switch",
+      "date": "2026-11-25",
+      "provider": "antigravity",
+      "product": "agy",
+      "entity_ids": [
+        "agy"
+      ],
+      "change_type": "added",
+      "scope": "feature",
+      "title": "Antigravity v2.35.2: Switch models while a turn is running",
+      "title_zh": "Antigravity v2.35.2：支持在对话轮次执行中切换模型",
+      "before": "Model selection could not be changed mid-turn while an agent run was in progress.",
+      "before_zh": "Agent 执行轮次进行中无法中途切换所选模型。",
+      "after": "You can switch the selected model mid-turn, with a tooltip clarifying when the change takes effect (+1 fix).",
+      "after_zh": "支持在轮次运行期间直接切换模型，并通过提示框明确生效时机（含 1 项修复）。",
+      "impact": "Makes it effortless to step down from Neon to Hydrogen mid-session to preserve 5h/7d quota.",
+      "impact_zh": "可在发现任务转入常规执行时随时从 Neon 降档至 Hydrogen，直接节省 5h/7d 共享配额。",
+      "official_source_url": "https://antigravity.google/docs/changelog#rel-hub-2.35.2",
+      "trust_level": "official"
+    },
+    {
+      "id": "agy-2026-11-25-neon-cache-28pct",
+      "date": "2026-11-25",
+      "provider": "antigravity",
+      "product": "agy",
+      "entity_ids": [
+        "gemini-4-neon"
+      ],
+      "change_type": "changed",
+      "scope": "quota",
+      "title": "Neon KV-cache hit rate +4.5% yields 28% more tasks per quota",
+      "title_zh": "Neon KV 缓存命中率提升 4.5%，同配额可多完成 28% 任务",
+      "before": "Baseline Neon prompt caching hit rate under standard AGY agent loop.",
+      "before_zh": "标准 AGY 循环下 Neon 的基准提示词缓存命中率。",
+      "after": "Cache hit rate increased by +4.5%, enabling ~28% more completed tasks within the same 5h/7d quota.",
+      "after_zh": "缓存命中率提升 4.5%，同等 5h/7d 配额下可多完成约 28% 的任务。",
+      "impact": "Directly extends effective Neon capacity when session prefixes stay stable above 4,096 tokens.",
+      "impact_zh": "在会话前缀保持 >= 4,096 Token 稳定时显著拉长 Neon 可用续航。",
+      "official_source_url": "https://x.com/_mohansolo/status/2125641696377712968",
+      "trust_level": "official-staff"
+    },
+    {
+      "id": "agy-2026-11-24-v2-35-1-resume-diagnostics",
+      "date": "2026-11-24",
+      "provider": "antigravity",
+      "product": "agy",
+      "entity_ids": [
+        "agy"
+      ],
+      "change_type": "added",
+      "scope": "feature",
+      "title": "Antigravity v2.35.1: Auto-resume conversations & compressed diagnostics",
+      "title_zh": "Antigravity v2.35.1：重启自动恢复会话与压缩诊断上传",
+      "before": "Active conversations required manual reopening after app restart or update.",
+      "before_zh": "应用重启或更新后需手动恢复活跃会话。",
+      "after": "Automatically resumes active conversations after restart/update, opens plugin links in side panel, and compresses diagnostic uploads.",
+      "after_zh": "重启/更新后自动恢复活跃会话，插件面板直开侧边栏，并压缩后台诊断上传带宽。",
+      "impact": "Prevents lost context and broken multi-turn KV cache prefixes across client updates.",
+      "impact_zh": "避免客户端更新中断长会话并减少上下文前缀重建损耗。",
+      "official_source_url": "https://antigravity.google/docs/changelog#rel-hub-2.35.1",
+      "trust_level": "official"
+    },
+    {
+      "id": "agy-2026-11-23-v2-35-0-unlimited-history",
+      "date": "2026-11-23",
+      "provider": "antigravity",
+      "product": "agy",
+      "entity_ids": [
+        "agy"
+      ],
+      "change_type": "added",
+      "scope": "feature",
+      "title": "Antigravity v2.35.0: Unlimited history & Conversation Management API",
+      "title_zh": "Antigravity v2.35.0：无限本地历史与会话管理 API",
+      "before": "Default local conversation history retention was capped.",
+      "before_zh": "本地会话历史默认保留条数受限。",
+      "after": "Unlimited local conversation history by default, Conversation Management API for agents, and Cmd+F HTML artifact search (20 improvements, 19 fixes).",
+      "after_zh": "默认无限保留本地会话历史，新增 Agent 会话管理 API 与 HTML 产物 Cmd+F 搜索（20 项改进、19 项修复）。",
+      "impact": "Improves auditability of past agent runs and enables programmatic conversation workflows.",
+      "impact_zh": "提升历史会话可追溯性，并支持 Agent 编程式管理会话。",
+      "official_source_url": "https://antigravity.google/docs/changelog#rel-hub-2.35.0",
+      "trust_level": "official"
+    },
+    {
+      "id": "agy-2026-11-23-argon-bucket-removed",
+      "date": "2026-11-23",
+      "provider": "antigravity",
+      "product": "agy",
+      "entity_ids": [
+        "gemini-4-argon",
+        "gemini-4-hydrogen"
+      ],
+      "change_type": "deprecated",
+      "scope": "quota",
+      "title": "Argon Pro bucket removed; Argon & 3.8 Flash leaving AGY Nov 30, 2026",
+      "title_zh": "取消 Pro 独立 Argon 配额桶；Argon 与 3.8 Flash 将于 11 月 30 日退出 AGY",
+      "before": "Paid Pro users had a separate overflow quota bucket allocated to Gemini 4 Argon.",
+      "before_zh": "付费 Pro 用户曾拥有独立的 Gemini 4 Argon 溢出配额桶。",
+      "after": "Separate Argon bucket removed (Nov 23) alongside global quota reset; Argon and Gemini 3.8 Flash marked leaving Antigravity on Nov 30, 2026.",
+      "after_zh": "11 月 23 日全局重置同步取消独立 Argon 桶；Argon 与 Gemini 3.8 Flash 均标注将于 2026 年 11 月 30 日退出 Antigravity。",
+      "impact": "Migrate all AGY workflows from Argon / 3.8 Flash to Gemini 4 Hydrogen or Neon.",
+      "impact_zh": "请将 AGY 工作流从 Argon / 3.8 Flash 迁移至 Gemini 4 Hydrogen 或 Neon。",
+      "official_source_url": "https://antigravity.google/docs/models/",
+      "trust_level": "official"
+    },
+    {
+      "id": "agy-2026-11-20-v2-34-0-mcp-apps",
+      "date": "2026-11-20",
+      "provider": "antigravity",
+      "product": "agy",
+      "entity_ids": [
+        "agy",
+        "gemini-4-neon"
+      ],
+      "change_type": "added",
+      "scope": "feature",
+      "title": "Antigravity v2.34.0: MCP Apps support & Gemini 4 Neon rollout",
+      "title_zh": "Antigravity v2.34.0：正式支持 MCP Apps 与 Gemini 4 Neon",
+      "before": "MCP integrations lacked native MCP Apps UI support and Gemini 4 Neon client integration.",
+      "before_zh": "MCP 集成尚不支持原生 MCP Apps 与 Gemini 4 Neon 客户端接入。",
+      "after": "Added MCP Apps support and Gemini 4 Neon for eligible paid consumer plans (15 improvements, 24 fixes).",
+      "after_zh": "为付费订阅用户带来 MCP Apps 支持与 Gemini 4 Neon（15 项改进、24 项修复）。",
+      "impact": "Enables rich interactive MCP tools such as agycraft-mcp inside Antigravity.",
+      "impact_zh": "为 agycraft-mcp 等本地开源 MCP 工具提供更顺畅的 AGY 原生交互体验。",
+      "official_source_url": "https://antigravity.google/docs/changelog#rel-hub-2.34.0",
+      "trust_level": "official"
+    },
+    {
+      "id": "google-2026-11-19-genie-4-ga",
+      "date": "2026-11-19",
+      "provider": "google",
+      "product": "gemini-api",
+      "entity_ids": [
+        "genie-4"
+      ],
+      "change_type": "added",
+      "scope": "model",
+      "title": "Genie 4 (genie-4) GA & Tool Retrieval (Preview) on Interactions API",
+      "title_zh": "Genie 4 (genie-4) 正式发布，Interactions API 上线按需工具检索",
+      "before": "No real-time steerable world-streaming model on v1beta; full tool schemas had to be sent on every turn.",
+      "before_zh": "v1beta 尚无实时可控世界流模型，且每轮需全量发送所有工具 Schema。",
+      "after": "Genie 4 GA streams 24fps 16:9 video + 48kHz audio ($1.50/$9/$17.50); Tool Retrieval (`defer_loading: true` + `tool_search`) loads schemas on demand.",
+      "after_zh": "Genie 4 GA 支持 24fps 视频+48kHz 立体声流式交互；Tool Retrieval（defer_loading+tool_search）支持大型工具集按需加载，大幅减少上下文膨胀。",
+      "impact": "Tool Retrieval drastically cuts baseline token bloat for MCP-heavy Gemini 3.6+ and Gemini 4 agents.",
+      "impact_zh": "按需工具检索可显著降低挂载大量 MCP 工具时的每轮上下文 Token 浪费。",
+      "official_source_url": "https://aistudio.google.com/docs/changelog#11-19-2026",
+      "trust_level": "official"
+    },
+    {
+      "id": "google-2026-11-18-gemini-4-neon-ga",
+      "date": "2026-11-18",
+      "provider": "google",
+      "product": "gemini-api",
+      "entity_ids": [
+        "gemini-4-neon"
+      ],
+      "change_type": "added",
+      "scope": "model",
+      "title": "Gemini 4 Neon GA on API ($3/$15) & Antigravity Orchestrator",
+      "title_zh": "Gemini 4 Neon 正式发布（API $3/$15）并上线 AGY Orchestrator",
+      "before": "Carbon and Hydrogen led the Gemini 4 lineup without a fast-completion frontier default.",
+      "before_zh": "此前 Gemini 4 由 Carbon 与 Hydrogen 主导，尚无兼顾前沿推理与端到端速度的默认旗舰。",
+      "after": "Gemini 4 Neon GA with 1M context/decode, 4 thinking levels (`xhigh` supported), and AGY Orchestrator (Neon + Hydrogen).",
+      "after_zh": "Gemini 4 Neon 正式上线，支持 1M 上下文/输出与 4 档思考深度（含 xhigh），并成为 AGY Orchestrator 默认规划器。",
+      "impact": "Becomes the primary planner in the Neon + Hydrogen quota-saving workflow.",
+      "impact_zh": "成为 Neon 规划 + Hydrogen 执行省额组合的核心规划模型。",
+      "official_source_url": "https://aistudio.google.com/docs/changelog",
+      "trust_level": "official"
+    },
+    {
+      "id": "agy-2026-11-17-v2-33-0-ssh-swarm",
+      "date": "2026-11-17",
+      "provider": "antigravity",
+      "product": "agy",
+      "entity_ids": [
+        "agy"
+      ],
+      "change_type": "added",
+      "scope": "feature",
+      "title": "Antigravity v2.33.0: SSH remote hosts, GitHub PR status & /swarm",
+      "title_zh": "Antigravity v2.33.0：支持 SSH 远程开发、GitHub PR 状态与 /swarm",
+      "before": "Remote Linux SSH agent execution and /swarm multi-agent collaboration were restricted.",
+      "before_zh": "SSH 远程 Linux 托管与 /swarm 多智能体协作尚未全面开放。",
+      "after": "Adds SSH host connections, live GitHub PR status pills, in-page Cmd/Ctrl+F, and opens /swarm + UI plugins to Business/Enterprise.",
+      "after_zh": "新增 SSH 远程主机、GitHub PR 实时状态徽章、内置浏览器查找，并向商业/企业版开放 /swarm。",
+      "impact": "Expands AGY into remote Linux build environments and multi-agent /swarm workflows.",
+      "impact_zh": "打通远程 Linux 开发机与多智能体 /swarm 协作工作流。",
+      "official_source_url": "https://antigravity.google/docs/changelog#rel-hub-2.33.0",
+      "trust_level": "official"
+    },
+    {
+      "id": "google-2026-11-12-gemini-4-hydrogen-ga",
+      "date": "2026-11-12",
+      "provider": "google",
+      "product": "gemini-api",
+      "entity_ids": [
+        "gemini-4-hydrogen"
+      ],
+      "change_type": "added",
+      "scope": "model",
+      "title": "Gemini 4 Hydrogen GA (Free tier + $1.50/$7.50 Paid + xhigh)",
+      "title_zh": "Gemini 4 Hydrogen 正式发布（含免费档 + 付费 $1.50/$7.50 + xhigh）",
+      "before": "Gemini 4 lacked a Free-tier-eligible everyday coding model.",
+      "before_zh": "Gemini 4 系列此前缺少覆盖免费档的日常编码主力模型。",
+      "after": "Gemini 4 Hydrogen GA launches on Free + Paid ($1.50/$7.50), adds `xhigh` thinking, and becomes default for Free/Plus AGY & Managed Agents.",
+      "after_zh": "Hydrogen 上线免费与付费档（$1.50/$7.50），新增 xhigh 思考档位，成为 Free/Plus AGY 及托管 Agent 默认模型。",
+      "impact": "Best cost-to-quality daily executor across both Free and Paid subscriptions.",
+      "impact_zh": "兼顾免费与付费档的高性价比日常编码执行模型。",
+      "official_source_url": "https://aistudio.google.com/docs/changelog",
+      "trust_level": "official"
+    },
+    {
+      "id": "google-2026-11-10-gemini-4-carbon-ga",
+      "date": "2026-11-10",
+      "provider": "google",
+      "product": "gemini-api",
+      "entity_ids": [
+        "gemini-4-carbon"
+      ],
+      "change_type": "added",
+      "scope": "model",
+      "title": "Gemini 4 Carbon GA with intro pricing ($2/$10) through Nov 30",
+      "title_zh": "Gemini 4 Carbon 正式发布（11 月 30 日前享 $2/$10 优惠价）",
+      "before": "Previous frontier reasoning capped at Gemini 4 Argon / Gemini 3.1 Pro.",
+      "before_zh": "此前最高推理档位为 Argon 与 Gemini 3.1 Pro。",
+      "after": "Gemini 4 Carbon GA launches as strongest SWE/science/cybersecurity model ($2/$10 through Nov 30; $4/$20 starting Dec 1).",
+      "after_zh": "Carbon 作为最强工程/科研/安全推理模型 GA 上线（11 月 30 日前 $2/$10，12 月 1 日起恢复 $4/$20）。",
+      "impact": "Budget API pipelines should account for the 2x Carbon price step-up on Dec 1, 2026.",
+      "impact_zh": "使用 Carbon API 的流水线需提前评估 12 月 1 日价格翻倍对成本的影响。",
+      "official_source_url": "https://aistudio.google.com/docs/changelog",
+      "trust_level": "official"
+    },
+    {
+      "id": "google-2026-11-05-omni-1-2-flash",
+      "date": "2026-11-05",
+      "provider": "google",
+      "product": "gemini-api",
+      "entity_ids": [
+        "gemini-omni-1-2-flash"
+      ],
+      "change_type": "added",
+      "scope": "model",
+      "title": "Gemini Omni 1.2 Flash GA: 15s video, 30% cheaper, 2x rate limits",
+      "title_zh": "Gemini Omni 1.2 Flash GA：15 秒视频、降价 30%、限流翻倍",
+      "before": "Gemini Omni 1.1 Flash had higher video output rates and lower paid-tier rate ceilings.",
+      "before_zh": "Omni 1.1 Flash 视频输出单价较高且付费档速率上限较低。",
+      "after": "Omni 1.2 Flash supports 15s video at $12/1M (-30%) with 2x rate limits; 1.1 auto-routes to 1.2 on Dec 3, 2026.",
+      "after_zh": "Omni 1.2 Flash 支持最长 15 秒视频、单价降至 $12/1M（降 30%）且限流翻倍；1.1 将于 12 月 3 日自动路由至此版本。",
+      "impact": "Expanded Office/OpenDocument support (PPT/ODP/ODS/DOC) also landed on the same day.",
+      "impact_zh": "同日还扩展了 PPT/ODP/ODS/DOC 办公文档与 Function Response 文件 URI 支持。",
+      "official_source_url": "https://aistudio.google.com/docs/changelog",
+      "trust_level": "official"
+    },
+    {
+      "id": "google-2026-11-02-2-5-deprecation",
+      "date": "2026-11-02",
+      "provider": "google",
+      "product": "gemini-api",
+      "entity_ids": [
+        "gemini-2-5-pro",
+        "gemini-2-5-flash",
+        "gemini-3-8-flash",
+        "gemini-3-5-flash-lite"
+      ],
+      "change_type": "deprecated",
+      "scope": "model",
+      "title": "Gemini 2.5 Pro & 2.5 Flash deprecated (auto-route Dec 1, 2026)",
+      "title_zh": "Gemini 2.5 Pro 与 2.5 Flash 正式弃用（12 月 1 日起自动路由）",
+      "before": "gemini-2.5-pro and gemini-2.5-flash selectable in AI Studio and active without forced routing.",
+      "before_zh": "2.5 Pro 与 2.5 Flash 可在 AI Studio 选择且直接响应原模型流量。",
+      "after": "Removed from AI Studio selector; on Dec 1, 2026, 2.5 Pro auto-routes to gemini-3.8-flash and 2.5 Flash auto-routes to gemini-3.5-flash-lite.",
+      "after_zh": "已从 AI Studio 选择器移除；12 月 1 日起 2.5 Pro 自动路由至 gemini-3.8-flash，2.5 Flash 自动路由至 gemini-3.5-flash-lite。",
+      "impact": "Remember implicit caching threshold rises from 2,048 (2.5) to 4,096 tokens (3.8/4).",
+      "impact_zh": "迁移后需注意隐式缓存门槛由 2.5 时代的 2,048 Token 提高至 4,096 Token。",
+      "official_source_url": "https://aistudio.google.com/docs/changelog",
+      "trust_level": "official"
+    },
+    {
+      "id": "google-2026-10-13-gemini-4-argon-ga",
+      "date": "2026-10-13",
+      "provider": "google",
+      "product": "gemini-api",
+      "entity_ids": [
+        "gemini-4-argon"
+      ],
+      "change_type": "added",
+      "scope": "model",
+      "title": "Gemini 4 Argon GA launch (inaugural Gemini 4 element release)",
+      "title_zh": "Gemini 4 Argon 正式发布（首个 Gemini 4 元素代号模型）",
+      "before": "Gemini 3.8 Flash and 3.1 Pro led coding workloads.",
+      "before_zh": "此前编码主力为 Gemini 3.8 Flash 与 3.1 Pro。",
+      "after": "Gemini 4 Argon launched on Oct 13 for complex SWE; later superseded by Carbon/Hydrogen/Neon in November.",
+      "after_zh": "Argon 于 10 月 13 日上线面向复杂软件工程，随后在 11 月逐步由 Carbon/Hydrogen/Neon 接棒。",
+      "impact": "Argon leaves Antigravity on Nov 30, 2026.",
+      "impact_zh": "Argon 将于 2026 年 11 月 30 日退出 Antigravity。",
+      "official_source_url": "https://aistudio.google.com/docs/changelog",
+      "trust_level": "official"
+    },
+    {
+      "id": "agy-2026-09-02-gemini-3-8-flash",
+      "date": "2026-09-02",
+      "provider": "google",
+      "product": "gemini-api",
+      "entity_ids": [
+        "gemini-3-8-flash"
+      ],
+      "change_type": "added",
+      "scope": "model",
+      "title": "Gemini 3.8 Flash launched with configurable thinking-latency trade-off",
+      "title_zh": "Gemini 3.8 Flash 发布，支持按思考深度权衡延迟",
+      "before": "Gemini 3.7 Flash served as the primary agentic Flash model.",
+      "before_zh": "此前由 Gemini 3.7 Flash 担任主要 Agent Flash 模型。",
+      "after": "3.8 Flash builds on 3.7 with tunable thinking levels; 3.7 Flash later deprecated Oct 8 (auto-routed to 3.8 Flash).",
+      "after_zh": "3.8 Flash 在 3.7 基础上引入可调思考档位；3.7 Flash 后于 10 月 8 日弃用并自动路由至 3.8 Flash。",
+      "impact": "Remains active on Gemini API/CLI while leaving AGY UI on Nov 30, 2026.",
+      "impact_zh": "在 Gemini API 与 CLI 中保持活跃，AGY 客户端将于 11 月 30 日由 Hydrogen 接替。",
+      "official_source_url": "https://antigravity.google/docs/changelog",
+      "trust_level": "official"
+    }
+  ]
+}

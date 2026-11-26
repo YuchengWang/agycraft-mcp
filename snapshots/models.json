@@ -1,0 +1,1464 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-26T03:55:52.857Z",
+  "providers": [
+    {
+      "id": "google",
+      "name": "Google Gemini",
+      "docs_url": "https://aistudio.google.com/docs/models"
+    },
+    {
+      "id": "antigravity",
+      "name": "Antigravity (AGY)",
+      "docs_url": "https://antigravity.google/docs/models/"
+    }
+  ],
+  "models": [
+    {
+      "id": "gemini-4-carbon",
+      "provider": "google",
+      "api_model_id": "gemini-4-carbon",
+      "display_name": "Gemini 4 Carbon",
+      "family": "Gemini 4",
+      "codename": "Carbon",
+      "lifecycle": "active",
+      "deprecated_date": null,
+      "replacement_model_id": null,
+      "featured": true,
+      "summary": "Strongest reasoning model in the Gemini 4 lineup for long-horizon software engineering, knowledge work, scientific discovery, and cybersecurity. Introductory API pricing ($2.00/$10.00) runs through Nov 30, 2026 ($4.00/$20.00 from Dec 1).",
+      "summary_zh": "Gemini 4 系列推理能力最强的旗舰模型，专为长周期软件工程、知识工作、科学研究与网络安全打造。API 首发优惠价（$2.00/$10.00）持续至 2026 年 11 月 30 日（12 月 1 日起恢复 $4.00/$20.00）。",
+      "specs": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 1048576,
+        "supports_thinking": true,
+        "thinking_levels": [
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "implicit_cache_min_tokens": 4096,
+        "speed_tier": "deliberate",
+        "reasoning_tier": "frontier",
+        "modalities_in": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "pdf"
+        ],
+        "modalities_out": [
+          "text",
+          "code",
+          "structured-json"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 2,
+        "output_per_1m_usd": 10,
+        "cached_input_per_1m_usd": 0.1,
+        "thinking_billed_as_output": true,
+        "currency": "USD",
+        "notes": "Not on Free tier. Introductory pricing $2.00 input / $10.00 output / $0.10 implicit cache through Nov 30, 2026; doubles to $4.00 / $20.00 / $0.20 on Dec 1, 2026. Thinking tokens billed as output.",
+        "notes_zh": "不提供免费档。2026 年 11 月 30 日前享优惠价：输入 $2.00 / 输出 $10.00 / 隐式缓存 $0.10（每百万 Token）；12 月 1 日起调整为 $4.00 / $20.00 / $0.20。Thinking 计入输出计费。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "very-high",
+        "relative_weight": 4.5,
+        "bucket_name": "shared-5h-7d-frontier",
+        "notes": "Fixed Enterprise Orchestrator planner (Gemini 4 Carbon High + Hydrogen High) and optional Pro/Ultra Orchestrator planner. Highest per-turn weight.",
+        "notes_zh": "Enterprise 版 Orchestrator 固定规划器（Carbon High + Hydrogen High），Pro/Ultra 亦可选作规划器；单轮共享桶权重最高。"
+      },
+      "availability": {
+        "products": [
+          "agy",
+          "gemini-cli",
+          "ai-studio",
+          "vertex-ai"
+        ],
+        "plans": [
+          "pro",
+          "ultra",
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 5,
+        "multi_file_execution": 4,
+        "long_context": 5,
+        "batch_api": 2,
+        "quick_qa": 2
+      },
+      "best_for": [
+        "Hardest long-horizon software engineering, cybersecurity audits, and scientific reasoning",
+        "Whole-repo dependency & invariant analysis with 1M context and up to 1M long decode",
+        "Enterprise Orchestrator planning paired with Gemini 4 Hydrogen execution"
+      ],
+      "best_for_zh": [
+        "高难度长周期软件工程、网络安全审计与科研级复杂推理",
+        "1M 上下文与最高 1M 超长输出下的全仓依赖与不变量分析",
+        "在 Enterprise Orchestrator 中担任规划器，搭配 Gemini 4 Hydrogen 执行"
+      ],
+      "not_recommended_for": [
+        "Routine formatting, quick terminal Q&A, or repetitive multi-file boilerplate",
+        "Uncompacted sessions with volatile prefixes that miss the 4,096-token implicit cache"
+      ],
+      "not_recommended_for_zh": [
+        "日常格式化、终端快速问答或重复性多文件样板修改",
+        "未执行 /compact 且前缀易变、无法命中 4,096 Token 隐式缓存的会话"
+      ],
+      "orchestrator_pairings": [
+        {
+          "role": "Enterprise Planner (High)",
+          "partner_model_id": "gemini-4-hydrogen",
+          "partner_role": "Executor (High)",
+          "why": "Official Enterprise Orchestrator pairing: Carbon plans invariants while Hydrogen executes edits rapidly."
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-11-10",
+          "change_type": "added",
+          "summary": "Gemini 4 Carbon GA on Gemini API & Antigravity with 1M context/decode and intro pricing through Nov 30, 2026.",
+          "chronicle_id": "google-2026-11-10-gemini-4-carbon-ga",
+          "official_source_url": "https://aistudio.google.com/docs/changelog"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/models#gemini-4",
+        "https://aistudio.google.com/docs/pricing",
+        "https://antigravity.google/docs/models/"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-4-neon",
+      "provider": "google",
+      "api_model_id": "gemini-4-neon",
+      "display_name": "Gemini 4 Neon",
+      "family": "Gemini 4",
+      "codename": "Neon",
+      "lifecycle": "active",
+      "deprecated_date": null,
+      "replacement_model_id": null,
+      "featured": true,
+      "summary": "Frontier intelligence with fast end-to-end completion. Default model on paid Antigravity Pro/Ultra/Enterprise plans with 4 thinking levels (low/medium/high/xhigh) and Orchestrator (Neon + Hydrogen).",
+      "summary_zh": "兼顾前沿智能与端到端完成速度的旗舰模型。Antigravity 付费 Pro/Ultra/Enterprise 默认主力模型，支持 4 档思考深度（low/medium/high/xhigh）及 Neon+Hydrogen Orchestrator。",
+      "specs": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 1048576,
+        "supports_thinking": true,
+        "thinking_levels": [
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "implicit_cache_min_tokens": 4096,
+        "speed_tier": "balanced",
+        "reasoning_tier": "frontier",
+        "modalities_in": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "pdf"
+        ],
+        "modalities_out": [
+          "text",
+          "code",
+          "structured-json"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 3,
+        "output_per_1m_usd": 15,
+        "cached_input_per_1m_usd": 0.15,
+        "thinking_billed_as_output": true,
+        "currency": "USD",
+        "notes": "API Paid tier: $3.00/1M input, $15.00/1M output (includes thinking), $0.15/1M implicit cached input. AGY context window up to 512K; API up to 1M.",
+        "notes_zh": "API 付费档：$3.00/百万输入、$15.00/百万输出（含 Thinking）、$0.15/百万隐式缓存输入。AGY 客户端上下文上限 512K，API 支持 1M。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "very-high",
+        "relative_weight": 4,
+        "bucket_name": "shared-5h-7d-frontier",
+        "notes": "Nov 24-25 AGY harness updates cut Neon per-task quota burn by 12% and lifted cache hit rate by +4.5% (+28% more tasks per quota).",
+        "notes_zh": "11 月 24-25 日 AGY harness 优化使 Neon 单任务耗额下降 12%，缓存命中率提升 4.5%（同配额可多完成约 28% 任务）。"
+      },
+      "availability": {
+        "products": [
+          "agy",
+          "gemini-cli",
+          "gemini-web",
+          "ai-studio",
+          "vertex-ai"
+        ],
+        "plans": [
+          "pro",
+          "ultra",
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 5,
+        "multi_file_execution": 4,
+        "long_context": 5,
+        "batch_api": 2,
+        "quick_qa": 3
+      },
+      "best_for": [
+        "Default frontier planning, RFC design, and subtle bug root-causing",
+        "AGY Orchestrator Planner paired with Gemini 4 Hydrogen Executor",
+        "End-to-end complex code synthesis using `high` or `xhigh` thinking"
+      ],
+      "best_for_zh": [
+        "系统架构规划、RFC 方案设计与疑难 Bug 根因定位",
+        "作为 AGY Orchestrator 规划器搭配 Gemini 4 Hydrogen 执行器",
+        "开启 high / xhigh 思考档位完成高复杂度端到端代码构建"
+      ],
+      "not_recommended_for": [
+        "Mechanical multi-file boilerplate edits (use Hydrogen to save ~45% shared quota)",
+        "High-volume classification or simple Q&A"
+      ],
+      "not_recommended_for_zh": [
+        "机械性多文件样板改写（改用 Hydrogen 可省约 45% 共享配额）",
+        "高频简单问答或大批量分类任务"
+      ],
+      "orchestrator_pairings": [
+        {
+          "role": "Default Orchestrator Planner",
+          "partner_model_id": "gemini-4-hydrogen",
+          "partner_role": "Default Executor",
+          "why": "Official AGY Orchestrator default: Neon plans architecture while Hydrogen executes edits cleanly."
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-11-25",
+          "change_type": "changed",
+          "summary": "AGY Neon cache hit rate +4.5%, enabling ~28% more tasks per quota.",
+          "chronicle_id": "agy-2026-11-25-neon-cache-28pct",
+          "official_source_url": "https://x.com/_mohansolo/status/2125641696377712968"
+        },
+        {
+          "date": "2026-11-18",
+          "change_type": "added",
+          "summary": "Gemini 4 Neon GA on API ($3/$15) and Antigravity Pro/Ultra/Enterprise.",
+          "chronicle_id": "google-2026-11-18-gemini-4-neon-ga",
+          "official_source_url": "https://aistudio.google.com/docs/changelog"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/models#gemini-4",
+        "https://antigravity.google/docs/models/",
+        "https://antigravity.google/docs/changelog"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-4-hydrogen",
+      "provider": "google",
+      "api_model_id": "gemini-4-hydrogen",
+      "display_name": "Gemini 4 Hydrogen",
+      "family": "Gemini 4",
+      "codename": "Hydrogen",
+      "lifecycle": "active",
+      "deprecated_date": null,
+      "replacement_model_id": null,
+      "featured": true,
+      "summary": "Speed and efficiency workhorse for everyday coding and agentic workflows. Available on ALL plans (Free, Plus, Pro, Ultra, Enterprise) and default for Free/Plus/trial accounts and Antigravity Managed Agents.",
+      "summary_zh": "面向日常编码与 Agent 工作流的高速高性价比主力模型。覆盖全订阅档位（含 Free/Plus），同时也是 Free/Plus/试用账号及托管 Agent 的默认模型。",
+      "specs": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 1048576,
+        "supports_thinking": true,
+        "thinking_levels": [
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "implicit_cache_min_tokens": 4096,
+        "speed_tier": "fast",
+        "reasoning_tier": "high",
+        "modalities_in": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "pdf"
+        ],
+        "modalities_out": [
+          "text",
+          "code",
+          "structured-json"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 1.5,
+        "output_per_1m_usd": 7.5,
+        "cached_input_per_1m_usd": 0.075,
+        "thinking_billed_as_output": true,
+        "currency": "USD",
+        "notes": "Free tier available on AI Studio & AGY! Paid API tier: $1.50/1M input, $7.50/1M output, $0.075/1M implicit cache.",
+        "notes_zh": "AI Studio 与 AGY 均提供免费档！API 付费档：$1.50/百万输入、$7.50/百万输出、$0.075/百万隐式缓存。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "medium",
+        "relative_weight": 1.5,
+        "bucket_name": "shared-5h-7d-standard",
+        "notes": "Default AGY Orchestrator executor and primary migration target for Argon (leaving Nov 30, 2026).",
+        "notes_zh": "AGY Orchestrator 默认执行器，也是将于 11 月 30 日下线的 Argon 的首选替代模型。"
+      },
+      "availability": {
+        "products": [
+          "agy",
+          "gemini-cli",
+          "gemini-web",
+          "ai-studio",
+          "vertex-ai"
+        ],
+        "plans": [
+          "free",
+          "pro",
+          "ultra",
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 4,
+        "multi_file_execution": 5,
+        "long_context": 4,
+        "batch_api": 4,
+        "quick_qa": 4
+      },
+      "best_for": [
+        "Daily multi-file coding, refactoring, and edit-compile-test loops",
+        "Default Orchestrator executor paired with Neon or Carbon planner",
+        "Free-tier AI Studio & AGY agent workflows"
+      ],
+      "best_for_zh": [
+        "日常多文件编码、重构与编辑-编译-测试闭环",
+        "搭配 Neon 或 Carbon 规划器担任 Orchestrator 默认执行器",
+        "Free 档位 AI Studio 与 AGY Agent 开发主力"
+      ],
+      "not_recommended_for": [
+        "Extreme greenfield distributed-system architecture where Neon/Carbon shines"
+      ],
+      "not_recommended_for_zh": [
+        "极高复杂度分布式系统零基础架构设计（建议由 Neon/Carbon 先规划）"
+      ],
+      "orchestrator_pairings": [
+        {
+          "role": "Primary Executor",
+          "partner_model_id": "gemini-4-neon",
+          "partner_role": "Planner",
+          "why": "Official AGY Orchestrator executor for Neon/Carbon plans."
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-11-12",
+          "change_type": "added",
+          "summary": "Gemini 4 Hydrogen GA with Free tier, $1.50/$7.50 paid pricing, and xhigh thinking.",
+          "chronicle_id": "google-2026-11-12-gemini-4-hydrogen-ga",
+          "official_source_url": "https://aistudio.google.com/docs/changelog"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/models#gemini-4",
+        "https://antigravity.google/docs/models/"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-4-argon",
+      "provider": "google",
+      "api_model_id": "gemini-4-argon",
+      "display_name": "Gemini 4 Argon",
+      "family": "Gemini 4",
+      "codename": "Argon",
+      "lifecycle": "deprecated",
+      "deprecated_date": "2026-11-30",
+      "replacement_model_id": "gemini-4-hydrogen",
+      "featured": false,
+      "summary": "Launched Oct 13, 2026 for complex SWE with lower token spend per turn vs Carbon. Leaving Antigravity on November 30, 2026 (separate Pro Argon bucket already retired Nov 23). Migrate to Hydrogen or Neon.",
+      "summary_zh": "2026 年 10 月 13 日发布。将于 2026 年 11 月 30 日从 Antigravity 下线（Pro 独立 Argon 桶已于 11 月 23 日取消），请迁移至 Gemini 4 Hydrogen 或 Neon。",
+      "specs": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 1048576,
+        "supports_thinking": true,
+        "thinking_levels": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "implicit_cache_min_tokens": 4096,
+        "speed_tier": "balanced",
+        "reasoning_tier": "high",
+        "modalities_in": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "pdf"
+        ],
+        "modalities_out": [
+          "text",
+          "code",
+          "structured-json"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 2,
+        "output_per_1m_usd": 10,
+        "cached_input_per_1m_usd": 0.1,
+        "thinking_billed_as_output": true,
+        "currency": "USD",
+        "notes": "API pricing mirrors Carbon ($2.00/$10.00 through Nov 30; $4.00/$20.00 Dec 1). Leaving Antigravity Nov 30, 2026.",
+        "notes_zh": "API 定价与 Carbon 相同（11 月 30 日前 $2.00/$10.00）；Antigravity 将于 2026 年 11 月 30 日下线该模型。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "medium",
+        "relative_weight": 1.8,
+        "bucket_name": "retired-argon-bucket",
+        "notes": "Pro Argon bucket removed Nov 23, 2026; leaving Antigravity on Nov 30, 2026.",
+        "notes_zh": "Pro 独立 Argon 配额桶已于 11 月 23 日移除，AGY 将于 11 月 30 日正式下线。"
+      },
+      "availability": {
+        "products": [
+          "agy",
+          "ai-studio",
+          "vertex-ai"
+        ],
+        "plans": [
+          "pro",
+          "ultra",
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 3,
+        "multi_file_execution": 3,
+        "long_context": 4,
+        "batch_api": 2,
+        "quick_qa": 3
+      },
+      "best_for": [
+        "Transitional workloads migrating to Gemini 4 Hydrogen or Neon before Nov 30, 2026"
+      ],
+      "best_for_zh": [
+        "11 月 30 日前迁移至 Gemini 4 Hydrogen 或 Neon 的过渡工作流"
+      ],
+      "not_recommended_for": [
+        "Any new Antigravity configuration or pinned CI pipeline (leaving Nov 30, 2026)"
+      ],
+      "not_recommended_for_zh": [
+        "任何新配置的 Antigravity 或长期 CI 流水线（11 月 30 日下线）"
+      ],
+      "orchestrator_pairings": [
+        {
+          "role": "Sunsetting Model",
+          "partner_model_id": "gemini-4-hydrogen",
+          "partner_role": "Recommended Replacement",
+          "why": "Hydrogen replaces Argon as the fast, quota-efficient Gemini 4 workhorse."
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-11-23",
+          "change_type": "deprecated",
+          "summary": "Separate Pro Argon bucket removed; Argon marked leaving Antigravity on Nov 30, 2026.",
+          "chronicle_id": "agy-2026-11-23-argon-bucket-removed",
+          "official_source_url": "https://antigravity.google/docs/models/"
+        },
+        {
+          "date": "2026-10-13",
+          "change_type": "added",
+          "summary": "Gemini 4 Argon GA launch.",
+          "chronicle_id": "google-2026-10-13-gemini-4-argon-ga",
+          "official_source_url": "https://aistudio.google.com/docs/changelog"
+        }
+      ],
+      "official_source_urls": [
+        "https://antigravity.google/docs/models/",
+        "https://aistudio.google.com/docs/models#gemini-4"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-3-8-flash",
+      "provider": "google",
+      "api_model_id": "gemini-3.8-flash",
+      "display_name": "Gemini 3.8 Flash",
+      "family": "Gemini 3",
+      "codename": "Flash",
+      "lifecycle": "active",
+      "deprecated_date": null,
+      "replacement_model_id": null,
+      "featured": true,
+      "summary": "Everyday high-speed agentic model (launched Sep 2, 2026). Active on Gemini API & CLI (and auto-route target for deprecated gemini-2.5-pro on Dec 1, 2026). Note: leaving Antigravity UI on Nov 30, 2026 in favor of Gemini 4 Hydrogen.",
+      "summary_zh": "高频高速通用 Agent 模型（2026 年 9 月 2 日发布）。在 Gemini API 与 CLI 中保持活跃（且将于 12 月 1 日承接已弃用的 gemini-2.5-pro 自动路由）；注：Antigravity 客户端将于 11 月 30 日下线该模型，改用 Hydrogen。",
+      "specs": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 65536,
+        "supports_thinking": true,
+        "thinking_levels": [
+          "off",
+          "low",
+          "medium"
+        ],
+        "implicit_cache_min_tokens": 4096,
+        "speed_tier": "ultra-fast",
+        "reasoning_tier": "standard",
+        "modalities_in": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "pdf"
+        ],
+        "modalities_out": [
+          "text",
+          "code",
+          "structured-json"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 0.75,
+        "output_per_1m_usd": 3.75,
+        "cached_input_per_1m_usd": 0.075,
+        "thinking_billed_as_output": true,
+        "currency": "USD",
+        "notes": "Free tier available. Paid API: $0.75/$3.75 ($0.075 cache) through Dec 31, 2026; $1.50/$7.50 from Jan 1, 2027. Context cache storage $0.50/1M/hr.",
+        "notes_zh": "支持免费档。API 付费档 2026 年 12 月 31 日前为 $0.75/$3.75（缓存 $0.075），2027 年 1 月 1 日起调整为 $1.50/$7.50。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "low",
+        "relative_weight": 0.5,
+        "bucket_name": "shared-5h-7d-flash",
+        "notes": "Low quota footprint on API & CLI; leaving AGY on Nov 30, 2026.",
+        "notes_zh": "API 与 CLI 配额占用极低；AGY 客户端将于 2026 年 11 月 30 日下线。"
+      },
+      "availability": {
+        "products": [
+          "gemini-cli",
+          "gemini-web",
+          "ai-studio",
+          "vertex-ai",
+          "agy"
+        ],
+        "plans": [
+          "free",
+          "pro",
+          "ultra",
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 2,
+        "multi_file_execution": 4,
+        "long_context": 4,
+        "batch_api": 5,
+        "quick_qa": 5
+      },
+      "best_for": [
+        "Fast CLI lookups, Batch API extraction, and log triage",
+        "Official Dec 1, 2026 auto-route upgrade target for gemini-2.5-pro"
+      ],
+      "best_for_zh": [
+        "Gemini CLI 快速问答、Batch API 批量提取与日志摘要",
+        "2026 年 12 月 1 日起替代 gemini-2.5-pro 的官方自动路由目标"
+      ],
+      "not_recommended_for": [
+        "New Antigravity workspace configs after Nov 30, 2026 (use Gemini 4 Hydrogen)"
+      ],
+      "not_recommended_for_zh": [
+        "11 月 30 日后的 Antigravity 工作区配置（请改用 Gemini 4 Hydrogen）"
+      ],
+      "orchestrator_pairings": [
+        {
+          "role": "Fast Triage",
+          "partner_model_id": "gemini-4-neon",
+          "partner_role": "Planner",
+          "why": "Summarize large logs with Flash before escalating hard bugs to Neon."
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-11-02",
+          "change_type": "changed",
+          "summary": "Designated as automatic replacement target for deprecated gemini-2.5-pro effective Dec 1, 2026.",
+          "chronicle_id": "google-2026-11-02-2-5-deprecation",
+          "official_source_url": "https://aistudio.google.com/docs/changelog"
+        },
+        {
+          "date": "2026-09-02",
+          "change_type": "added",
+          "summary": "Gemini 3.8 Flash launched.",
+          "chronicle_id": "agy-2026-09-02-gemini-3-8-flash",
+          "official_source_url": "https://antigravity.google/docs/changelog"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/models#all-gemini-3-models",
+        "https://antigravity.google/docs/models/"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-3-6-flash",
+      "provider": "google",
+      "api_model_id": "gemini-3.6-flash",
+      "display_name": "Gemini 3.6 Flash",
+      "family": "Gemini 3",
+      "codename": "Flash",
+      "lifecycle": "active",
+      "deprecated_date": null,
+      "replacement_model_id": null,
+      "featured": false,
+      "summary": "Enterprise & API stable Flash model using up to 17% fewer tokens than 3.5 Flash; supports Tool Retrieval (defer_loading) in Interactions API.",
+      "summary_zh": "面向 Enterprise 与 API 的稳定版 Flash 模型，较 3.5 Flash 节省最高 17% Token，支持 Interactions API 按需工具检索（Tool Retrieval）。",
+      "specs": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 65536,
+        "supports_thinking": true,
+        "thinking_levels": [
+          "off",
+          "low",
+          "medium"
+        ],
+        "implicit_cache_min_tokens": 4096,
+        "speed_tier": "ultra-fast",
+        "reasoning_tier": "standard",
+        "modalities_in": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "pdf"
+        ],
+        "modalities_out": [
+          "text",
+          "code",
+          "structured-json"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 0.75,
+        "output_per_1m_usd": 3.75,
+        "cached_input_per_1m_usd": 0.075,
+        "thinking_billed_as_output": true,
+        "currency": "USD",
+        "notes": "Same API pricing schedule as 3.8 Flash; Enterprise-only inside Antigravity.",
+        "notes_zh": "API 定价与 3.8 Flash 一致；在 Antigravity 中仅限 Enterprise 账号可用。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "low",
+        "relative_weight": 0.5,
+        "bucket_name": "shared-5h-7d-flash",
+        "notes": "3,000,000 enqueued batch token tier.",
+        "notes_zh": "Batch API 排队上限 3,000,000 Token 档位。"
+      },
+      "availability": {
+        "products": [
+          "ai-studio",
+          "vertex-ai",
+          "agy"
+        ],
+        "plans": [
+          "free",
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 2,
+        "multi_file_execution": 3,
+        "long_context": 4,
+        "batch_api": 5,
+        "quick_qa": 5
+      },
+      "best_for": [
+        "Enterprise pipelines and Interactions API tool_search (defer_loading)",
+        "Stable replacement for deprecated Gemini 3.5 Flash"
+      ],
+      "best_for_zh": [
+        "企业级稳定流水线与 Interactions API 工具按需加载（tool_search）",
+        "替代已弃用的 Gemini 3.5 Flash"
+      ],
+      "not_recommended_for": [
+        "Frontier multi-file architecture (use Gemini 4 Neon/Hydrogen)"
+      ],
+      "not_recommended_for_zh": [
+        "前沿多文件架构规划（请用 Gemini 4 Neon/Hydrogen）"
+      ],
+      "orchestrator_pairings": [],
+      "history": [
+        {
+          "date": "2026-07-21",
+          "change_type": "added",
+          "summary": "Gemini 3.6 Flash launched with 17% fewer tokens vs 3.5 Flash.",
+          "chronicle_id": "agy-2026-07-21-gemini-3-6-flash",
+          "official_source_url": "https://antigravity.google/docs/changelog"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/models#all-gemini-3-models",
+        "https://antigravity.google/docs/models/"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-3-5-flash-lite",
+      "provider": "google",
+      "api_model_id": "gemini-3.5-flash-lite",
+      "display_name": "Gemini 3.5 Flash-Lite",
+      "family": "Gemini 3",
+      "codename": "Flash-Lite",
+      "lifecycle": "active",
+      "deprecated_date": null,
+      "replacement_model_id": null,
+      "featured": false,
+      "summary": "Ultra-lightweight high-throughput Gemini 3 model; designated Dec 1, 2026 auto-route target for deprecated gemini-2.5-flash.",
+      "summary_zh": "超轻量高并发 Gemini 3 模型，将于 2026 年 12 月 1 日自动承接已弃用的 gemini-2.5-flash 流量。",
+      "specs": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 32768,
+        "supports_thinking": false,
+        "thinking_levels": [
+          "off"
+        ],
+        "implicit_cache_min_tokens": 4096,
+        "speed_tier": "ultra-fast",
+        "reasoning_tier": "lightweight",
+        "modalities_in": [
+          "text",
+          "image",
+          "code"
+        ],
+        "modalities_out": [
+          "text",
+          "structured-json"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 0.1,
+        "output_per_1m_usd": 0.4,
+        "cached_input_per_1m_usd": 0.025,
+        "thinking_billed_as_output": false,
+        "currency": "USD",
+        "notes": "Lowest-cost general Gemini 3 API endpoint; generous Free RPD.",
+        "notes_zh": "Gemini 3 系列成本最低的通用 API 端点，Free 档每日请求额度充裕。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "minimal",
+        "relative_weight": 0.25,
+        "bucket_name": "shared-5h-7d-flash",
+        "notes": "Minimal quota footprint.",
+        "notes_zh": "极低配额消耗。"
+      },
+      "availability": {
+        "products": [
+          "ai-studio",
+          "vertex-ai",
+          "gemini-cli"
+        ],
+        "plans": [
+          "free",
+          "pro",
+          "ultra",
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 1,
+        "multi_file_execution": 2,
+        "long_context": 3,
+        "batch_api": 5,
+        "quick_qa": 5
+      },
+      "best_for": [
+        "High-RPM classification, translation, extraction, and gemini-2.5-flash migration"
+      ],
+      "best_for_zh": [
+        "高并发分类、翻译、结构化抽取及 gemini-2.5-flash 迁移承接"
+      ],
+      "not_recommended_for": [
+        "Multi-step agentic coding or complex debugging"
+      ],
+      "not_recommended_for_zh": [
+        "多步 Agent 编码或复杂调试"
+      ],
+      "orchestrator_pairings": [],
+      "history": [
+        {
+          "date": "2026-11-02",
+          "change_type": "changed",
+          "summary": "Designated auto-route replacement for deprecated gemini-2.5-flash effective Dec 1, 2026.",
+          "chronicle_id": "google-2026-11-02-2-5-deprecation",
+          "official_source_url": "https://aistudio.google.com/docs/changelog"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/models#all-gemini-3-models"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-3-1-flash-lite",
+      "provider": "google",
+      "api_model_id": "gemini-3.1-flash-lite",
+      "display_name": "Gemini 3.1 Flash-Lite",
+      "family": "Gemini 3",
+      "codename": "Flash-Lite",
+      "lifecycle": "active",
+      "deprecated_date": null,
+      "replacement_model_id": null,
+      "featured": false,
+      "summary": "Stable Gemini 3.1 Flash-Lite GA release (replaces shut-down gemini-3.1-flash-lite-preview) for ultra-low-latency text and classification tasks.",
+      "summary_zh": "Gemini 3.1 Flash-Lite 正式稳定版（替代已关停的 preview 版），主打超低延迟文本处理与分类。",
+      "specs": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 32768,
+        "supports_thinking": false,
+        "thinking_levels": [
+          "off"
+        ],
+        "implicit_cache_min_tokens": 4096,
+        "speed_tier": "ultra-fast",
+        "reasoning_tier": "lightweight",
+        "modalities_in": [
+          "text",
+          "image"
+        ],
+        "modalities_out": [
+          "text",
+          "structured-json"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 0.1,
+        "output_per_1m_usd": 0.4,
+        "cached_input_per_1m_usd": 0.025,
+        "thinking_billed_as_output": false,
+        "currency": "USD",
+        "notes": "GA replacement for shut-down gemini-3.1-flash-lite-preview.",
+        "notes_zh": "已关停 gemini-3.1-flash-lite-preview 的 GA 正式替代版本。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "minimal",
+        "relative_weight": 0.25,
+        "bucket_name": "shared-5h-7d-flash",
+        "notes": "Minimal API footprint.",
+        "notes_zh": "极低 API 配额占用。"
+      },
+      "availability": {
+        "products": [
+          "ai-studio",
+          "vertex-ai"
+        ],
+        "plans": [
+          "free",
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 1,
+        "multi_file_execution": 1,
+        "long_context": 3,
+        "batch_api": 5,
+        "quick_qa": 5
+      },
+      "best_for": [
+        "Legacy 3.1-flash-lite-preview migration and ultra-fast API tagging"
+      ],
+      "best_for_zh": [
+        "3.1-flash-lite-preview 迁移及超低延迟 API 标签分类"
+      ],
+      "not_recommended_for": [
+        "Agentic software engineering"
+      ],
+      "not_recommended_for_zh": [
+        "Agent 软件工程开发"
+      ],
+      "orchestrator_pairings": [],
+      "history": [
+        {
+          "date": "2026-10-08",
+          "change_type": "added",
+          "summary": "Listed in AI Studio Gemini 3 catalog as stable replacement for shut-down preview.",
+          "chronicle_id": null,
+          "official_source_url": "https://aistudio.google.com/docs/models#all-gemini-3-models"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/models#all-gemini-3-models"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-3-8-live",
+      "provider": "google",
+      "api_model_id": "gemini-3.8-live",
+      "display_name": "Gemini 3.8 Live",
+      "family": "Gemini 3",
+      "codename": "Live",
+      "lifecycle": "active",
+      "deprecated_date": null,
+      "replacement_model_id": null,
+      "featured": false,
+      "summary": "Real-time bidirectional voice/audio & multimodal streaming model (plus extended-thinking variant), replacing legacy gemini-3.1-flash-live-preview.",
+      "summary_zh": "实时双向语音/多模态流式模型（另有 Extended Thinking 变体），官方推荐用于替代旧版 gemini-3.1-flash-live-preview。",
+      "specs": {
+        "context_window_tokens": 131072,
+        "max_output_tokens": 16384,
+        "supports_thinking": true,
+        "thinking_levels": [
+          "off",
+          "low"
+        ],
+        "implicit_cache_min_tokens": 4096,
+        "speed_tier": "ultra-fast",
+        "reasoning_tier": "standard",
+        "modalities_in": [
+          "text",
+          "audio",
+          "video",
+          "image"
+        ],
+        "modalities_out": [
+          "text",
+          "audio"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": null,
+        "output_per_1m_usd": null,
+        "cached_input_per_1m_usd": null,
+        "thinking_billed_as_output": true,
+        "currency": "USD",
+        "notes": "Live API audio/video streaming rates apply; see aistudio.google.com/docs/pricing.",
+        "notes_zh": "按 Live API 音视频流式单价计费，详见 aistudio.google.com/docs/pricing。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "low",
+        "relative_weight": 0.7,
+        "bucket_name": "live-streaming-api",
+        "notes": "Dedicated Live API session concurrency limits.",
+        "notes_zh": "适用 Live API 并发会话限流。"
+      },
+      "availability": {
+        "products": [
+          "ai-studio",
+          "vertex-ai"
+        ],
+        "plans": [
+          "free",
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 1,
+        "multi_file_execution": 1,
+        "long_context": 2,
+        "batch_api": 1,
+        "quick_qa": 5
+      },
+      "best_for": [
+        "Low-latency bidirectional voice assistants and live camera/screen streaming"
+      ],
+      "best_for_zh": [
+        "低延迟双向语音助手与实时音视频流交互"
+      ],
+      "not_recommended_for": [
+        "Offline batch processing or multi-file coding"
+      ],
+      "not_recommended_for_zh": [
+        "离线批处理或代码仓库开发"
+      ],
+      "orchestrator_pairings": [],
+      "history": [
+        {
+          "date": "2026-10-15",
+          "change_type": "added",
+          "summary": "Recommended Live API target replacing gemini-3.1-flash-live-preview.",
+          "chronicle_id": null,
+          "official_source_url": "https://aistudio.google.com/docs/models#audio-models"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/models#audio-models"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "genie-4",
+      "provider": "google",
+      "api_model_id": "genie-4",
+      "display_name": "Genie 4",
+      "family": "Genie",
+      "codename": "Genie 4",
+      "lifecycle": "active",
+      "deprecated_date": null,
+      "replacement_model_id": null,
+      "featured": false,
+      "summary": "Real-time interactive world generation model GA (Nov 19, 2026) on Interactions API (v1beta): streams steerable 24 fps 16:9 video with 48 kHz stereo audio over WebRTC/WebSockets.",
+      "summary_zh": "实时交互式世界生成模型（2026 年 11 月 19 日 Interactions API v1beta 正式发布）：支持通过 WebRTC/WebSockets 流式输出可控 24 fps 16:9 视频与 48 kHz 立体声音频。",
+      "specs": {
+        "context_window_tokens": 131072,
+        "max_output_tokens": 65536,
+        "supports_thinking": false,
+        "thinking_levels": [
+          "off"
+        ],
+        "implicit_cache_min_tokens": 0,
+        "speed_tier": "ultra-fast",
+        "reasoning_tier": "standard",
+        "modalities_in": [
+          "text",
+          "image"
+        ],
+        "modalities_out": [
+          "video",
+          "audio",
+          "text"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 1.5,
+        "output_per_1m_usd": 17.5,
+        "cached_input_per_1m_usd": null,
+        "thinking_billed_as_output": false,
+        "currency": "USD",
+        "notes": "Paid tier only: $1.50/1M input, $9.00/1M text output, $17.50/1M video output (~$0.10/sec, stereo audio included).",
+        "notes_zh": "仅限付费档：$1.50/百万输入、$9.00/百万文本输出、$17.50/百万视频输出（约 $0.10/秒，含立体声）。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "high",
+        "relative_weight": 3,
+        "bucket_name": "interactions-genie-api",
+        "notes": "Interactions API WebRTC/WebSocket streaming session limits.",
+        "notes_zh": "适用 Interactions API WebRTC/WebSocket 流式配额。"
+      },
+      "availability": {
+        "products": [
+          "ai-studio",
+          "vertex-ai"
+        ],
+        "plans": [
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 1,
+        "multi_file_execution": 1,
+        "long_context": 2,
+        "batch_api": 1,
+        "quick_qa": 3
+      },
+      "best_for": [
+        "Interactive 24fps world simulation, WASD/arrow steering, and game/robotics prototyping"
+      ],
+      "best_for_zh": [
+        "交互式 24fps 世界仿真、键盘实时操控与游戏/具身智能原型验证"
+      ],
+      "not_recommended_for": [
+        "Software engineering, text reasoning, or static JSON pipelines"
+      ],
+      "not_recommended_for_zh": [
+        "代码开发、文本推理或静态 JSON 提取"
+      ],
+      "orchestrator_pairings": [],
+      "history": [
+        {
+          "date": "2026-11-19",
+          "change_type": "added",
+          "summary": "Genie 4 GA on Interactions API (v1beta) with 24fps video + 48kHz stereo audio.",
+          "chronicle_id": "google-2026-11-19-genie-4-ga",
+          "official_source_url": "https://aistudio.google.com/docs/changelog#11-19-2026"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/changelog#11-19-2026",
+        "https://aistudio.google.com/docs/models#all-gemini-3-models"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-omni-1-2-flash",
+      "provider": "google",
+      "api_model_id": "gemini-omni-1.2-flash",
+      "display_name": "Gemini Omni 1.2 Flash",
+      "family": "Gemini Omni",
+      "codename": "Omni 1.2",
+      "lifecycle": "active",
+      "deprecated_date": null,
+      "replacement_model_id": null,
+      "featured": false,
+      "summary": "Multimodal generation model GA (Nov 5, 2026) supporting up to 15s video output at 30% lower video pricing ($12.00/1M) and doubled paid-tier rate limits.",
+      "summary_zh": "全模态生成模型（2026 年 11 月 5 日 GA）：支持最长 15 秒视频生成，视频输出降价 30%（$12.00/百万 Token），付费档限流翻倍。",
+      "specs": {
+        "context_window_tokens": 131072,
+        "max_output_tokens": 32768,
+        "supports_thinking": false,
+        "thinking_levels": [
+          "off"
+        ],
+        "implicit_cache_min_tokens": 0,
+        "speed_tier": "fast",
+        "reasoning_tier": "standard",
+        "modalities_in": [
+          "text",
+          "image",
+          "audio",
+          "video"
+        ],
+        "modalities_out": [
+          "text",
+          "image",
+          "video",
+          "audio"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": null,
+        "output_per_1m_usd": 12,
+        "cached_input_per_1m_usd": null,
+        "thinking_billed_as_output": false,
+        "currency": "USD",
+        "notes": "Video output $12.00/1M tokens (30% reduction). gemini-omni-1.1-flash auto-routes here Dec 3, 2026.",
+        "notes_zh": "视频输出 $12.00/百万 Token（降价 30%）；gemini-omni-1.1-flash 将于 12 月 3 日自动路由至此版本。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "medium",
+        "relative_weight": 2,
+        "bucket_name": "generative-media-api",
+        "notes": "Doubled paid-tier rate limits as of Nov 5, 2026.",
+        "notes_zh": "2026 年 11 月 5 日起付费档速率上限翻倍。"
+      },
+      "availability": {
+        "products": [
+          "ai-studio",
+          "vertex-ai"
+        ],
+        "plans": [
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 1,
+        "multi_file_execution": 1,
+        "long_context": 2,
+        "batch_api": 2,
+        "quick_qa": 3
+      },
+      "best_for": [
+        "Unified multimodal media generation up to 15s video clips"
+      ],
+      "best_for_zh": [
+        "最长 15 秒的统一多模态音视频内容生成"
+      ],
+      "not_recommended_for": [
+        "Code editing or repository reasoning"
+      ],
+      "not_recommended_for_zh": [
+        "代码编辑或仓库推理"
+      ],
+      "orchestrator_pairings": [],
+      "history": [
+        {
+          "date": "2026-11-05",
+          "change_type": "added",
+          "summary": "Gemini Omni 1.2 Flash GA with 15s video, 30% lower video pricing, and 2x rate limits.",
+          "chronicle_id": "google-2026-11-05-omni-1-2-flash",
+          "official_source_url": "https://aistudio.google.com/docs/changelog"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/changelog",
+        "https://aistudio.google.com/docs/models#generative-media-models"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-2-5-pro",
+      "provider": "google",
+      "api_model_id": "gemini-2.5-pro",
+      "display_name": "Gemini 2.5 Pro",
+      "family": "Gemini 2.5",
+      "codename": "2.5 Pro",
+      "lifecycle": "deprecated",
+      "deprecated_date": "2026-12-01",
+      "replacement_model_id": "gemini-3-8-flash",
+      "featured": false,
+      "summary": "Deprecated Nov 2, 2026 and removed from AI Studio selector. Auto-routes to gemini-3.8-flash effective December 1, 2026.",
+      "summary_zh": "已于 2026 年 11 月 2 日弃用并从 AI Studio 选择器移除；将于 2026 年 12 月 1 日起自动路由至 gemini-3.8-flash。",
+      "specs": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 65536,
+        "supports_thinking": true,
+        "thinking_levels": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "implicit_cache_min_tokens": 2048,
+        "speed_tier": "deliberate",
+        "reasoning_tier": "high",
+        "modalities_in": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "pdf"
+        ],
+        "modalities_out": [
+          "text",
+          "code",
+          "structured-json"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 1.25,
+        "output_per_1m_usd": 10,
+        "cached_input_per_1m_usd": 0.31,
+        "thinking_billed_as_output": true,
+        "currency": "USD",
+        "notes": "Auto-routes to gemini-3.8-flash on Dec 1, 2026. Implicit cache threshold was 2,048 tokens (3.8 Flash / Gemini 4 require 4,096).",
+        "notes_zh": "2026 年 12 月 1 日起自动路由至 gemini-3.8-flash。注意旧版隐式缓存门槛为 2,048 Token，迁移后须满足 4,096 Token。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "high",
+        "relative_weight": 2.5,
+        "bucket_name": "legacy-2.5",
+        "notes": "Deprecated; migrate hardcoded model strings immediately.",
+        "notes_zh": "已弃用，请尽快替换硬编码模型 ID。"
+      },
+      "availability": {
+        "products": [
+          "ai-studio",
+          "vertex-ai"
+        ],
+        "plans": [
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 3,
+        "multi_file_execution": 3,
+        "long_context": 4,
+        "batch_api": 2,
+        "quick_qa": 2
+      },
+      "best_for": [
+        "Legacy compatibility audit before Dec 1, 2026 auto-routing"
+      ],
+      "best_for_zh": [
+        "12 月 1 日自动路由前的存量兼容排查"
+      ],
+      "not_recommended_for": [
+        "Any new project (use Gemini 4 Hydrogen/Neon or Gemini 3.8 Flash)"
+      ],
+      "not_recommended_for_zh": [
+        "任何新项目（请使用 Gemini 4 Hydrogen/Neon 或 Gemini 3.8 Flash）"
+      ],
+      "orchestrator_pairings": [],
+      "history": [
+        {
+          "date": "2026-11-02",
+          "change_type": "deprecated",
+          "summary": "Deprecated; auto-routes to gemini-3.8-flash effective Dec 1, 2026.",
+          "chronicle_id": "google-2026-11-02-2-5-deprecation",
+          "official_source_url": "https://aistudio.google.com/docs/changelog"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/models#gemini-25-pro",
+        "https://aistudio.google.com/docs/changelog"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    },
+    {
+      "id": "gemini-2-5-flash",
+      "provider": "google",
+      "api_model_id": "gemini-2.5-flash",
+      "display_name": "Gemini 2.5 Flash",
+      "family": "Gemini 2.5",
+      "codename": "2.5 Flash",
+      "lifecycle": "deprecated",
+      "deprecated_date": "2026-12-01",
+      "replacement_model_id": "gemini-3-5-flash-lite",
+      "featured": false,
+      "summary": "Deprecated Nov 2, 2026 and removed from AI Studio selector. Auto-routes to gemini-3.5-flash-lite effective December 1, 2026.",
+      "summary_zh": "已于 2026 年 11 月 2 日弃用并从 AI Studio 选择器移除；将于 2026 年 12 月 1 日起自动路由至 gemini-3.5-flash-lite。",
+      "specs": {
+        "context_window_tokens": 1048576,
+        "max_output_tokens": 65536,
+        "supports_thinking": true,
+        "thinking_levels": [
+          "off",
+          "low",
+          "medium"
+        ],
+        "implicit_cache_min_tokens": 2048,
+        "speed_tier": "ultra-fast",
+        "reasoning_tier": "standard",
+        "modalities_in": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "pdf"
+        ],
+        "modalities_out": [
+          "text",
+          "code",
+          "structured-json"
+        ]
+      },
+      "pricing": {
+        "input_per_1m_usd": 0.3,
+        "output_per_1m_usd": 2.5,
+        "cached_input_per_1m_usd": 0.075,
+        "thinking_billed_as_output": true,
+        "currency": "USD",
+        "notes": "Auto-routes to gemini-3.5-flash-lite on Dec 1, 2026.",
+        "notes_zh": "2026 年 12 月 1 日起自动路由至 gemini-3.5-flash-lite。"
+      },
+      "quota_profile": {
+        "shared_bucket_cost_tier": "low",
+        "relative_weight": 0.5,
+        "bucket_name": "legacy-2.5",
+        "notes": "Deprecated; migrate to gemini-3.5-flash-lite or gemini-3.8-flash.",
+        "notes_zh": "已弃用，请迁移至 gemini-3.5-flash-lite 或 gemini-3.8-flash。"
+      },
+      "availability": {
+        "products": [
+          "ai-studio",
+          "vertex-ai"
+        ],
+        "plans": [
+          "api"
+        ]
+      },
+      "task_fit": {
+        "architecture": 1,
+        "multi_file_execution": 2,
+        "long_context": 3,
+        "batch_api": 4,
+        "quick_qa": 4
+      },
+      "best_for": [
+        "Legacy compatibility audit before Dec 1, 2026 auto-routing"
+      ],
+      "best_for_zh": [
+        "12 月 1 日自动路由前的存量兼容排查"
+      ],
+      "not_recommended_for": [
+        "Any new project (use Gemini 3.5 Flash-Lite or Gemini 3.8 Flash)"
+      ],
+      "not_recommended_for_zh": [
+        "任何新项目（请改用 Gemini 3.5 Flash-Lite 或 Gemini 3.8 Flash）"
+      ],
+      "orchestrator_pairings": [],
+      "history": [
+        {
+          "date": "2026-11-02",
+          "change_type": "deprecated",
+          "summary": "Deprecated; auto-routes to gemini-3.5-flash-lite effective Dec 1, 2026.",
+          "chronicle_id": "google-2026-11-02-2-5-deprecation",
+          "official_source_url": "https://aistudio.google.com/docs/changelog"
+        }
+      ],
+      "official_source_urls": [
+        "https://aistudio.google.com/docs/models#gemini-25-flash",
+        "https://aistudio.google.com/docs/changelog"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z"
+    }
+  ],
+  "orchestrator_recipes": [
+    {
+      "id": "neon-planner-hydrogen-executor",
+      "name": "Neon Planner + Hydrogen Executor (AGY Default)",
+      "provider": "antigravity",
+      "planner_model_id": "gemini-4-neon",
+      "executor_model_id": "gemini-4-hydrogen",
+      "tasks": [
+        "architecture",
+        "multi_file_execution"
+      ],
+      "plans": [
+        "pro",
+        "ultra",
+        "api"
+      ],
+      "priority": "save-quota",
+      "quota_saving_pct_est": 45,
+      "rationale": "Official Antigravity Pro/Ultra Orchestrator default: Neon plans the architecture and invariants while Hydrogen executes multi-file edits cleanly (~45% shared quota savings).",
+      "rationale_zh": "Antigravity Pro/Ultra 官方默认 Orchestrator 组合：Neon 负责架构规划与不变量设计，Hydrogen 负责多文件执行与测试闭环，预计节省约 45% 共享配额。"
+    },
+    {
+      "id": "carbon-enterprise-hydrogen-executor",
+      "name": "Carbon (High) Planner + Hydrogen (High) Executor",
+      "provider": "antigravity",
+      "planner_model_id": "gemini-4-carbon",
+      "executor_model_id": "gemini-4-hydrogen",
+      "tasks": [
+        "architecture",
+        "long_context"
+      ],
+      "plans": [
+        "pro",
+        "ultra",
+        "api"
+      ],
+      "priority": "max-quality",
+      "quota_saving_pct_est": 30,
+      "rationale": "Fixed Enterprise Orchestrator pairing in Antigravity: uses Gemini 4 Carbon for hardest SWE/security planning and Hydrogen for fast execution.",
+      "rationale_zh": "Antigravity Enterprise 版官方固定 Orchestrator 组合：Carbon 负责最高难度长周期工程规划，Hydrogen 负责高速落盘执行。"
+    },
+    {
+      "id": "neon-max-quality",
+      "name": "Neon End-to-End Frontier Mode",
+      "provider": "google",
+      "planner_model_id": "gemini-4-neon",
+      "executor_model_id": "gemini-4-neon",
+      "tasks": [
+        "architecture",
+        "multi_file_execution",
+        "long_context"
+      ],
+      "plans": [
+        "ultra",
+        "api"
+      ],
+      "priority": "max-quality",
+      "quota_saving_pct_est": 0,
+      "rationale": "Reserve for critical security audits, concurrency bugs, or Ultra/API budgets where maximum reasoning depth outweighs quota conservation.",
+      "rationale_zh": "适用于关键安全审计、并发疑难排查或 Ultra/API 预算充裕的场景。"
+    },
+    {
+      "id": "flash-speed-batch",
+      "name": "3.8 Flash + 3.5 Flash-Lite Ultra-Speed Pipeline",
+      "provider": "google",
+      "planner_model_id": "gemini-3-8-flash",
+      "executor_model_id": "gemini-3-5-flash-lite",
+      "tasks": [
+        "batch_api",
+        "quick_qa"
+      ],
+      "plans": [
+        "free",
+        "pro",
+        "ultra",
+        "api"
+      ],
+      "priority": "max-speed",
+      "quota_saving_pct_est": 75,
+      "rationale": "Ideal for Free tier, Batch API (50% off), and high-RPM classification pipelines.",
+      "rationale_zh": "适合 Free 免费档、Batch API（半价）及高并发轻量分类/问答流水线。"
+    }
+  ]
+}

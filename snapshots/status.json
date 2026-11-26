@@ -1,0 +1,186 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-26T03:55:52.857Z",
+  "overall_status": "operational",
+  "surfaces": [
+    {
+      "id": "gemini-web",
+      "provider": "google",
+      "name": "Gemini Web",
+      "status": "operational",
+      "summary": "No active official outages reported.",
+      "source_url": "https://www.google.com/appsstatus/dashboard/",
+      "trust_level": "official",
+      "updated_at": "2026-11-26T03:55:52.857Z"
+    },
+    {
+      "id": "gemini-cli",
+      "provider": "google",
+      "name": "Gemini CLI",
+      "status": "operational",
+      "summary": "Operational · npm latest v0.71.1",
+      "source_url": "https://github.com/google-gemini/gemini-cli",
+      "trust_level": "official",
+      "updated_at": "2026-11-26T03:55:52.857Z"
+    },
+    {
+      "id": "agy",
+      "provider": "antigravity",
+      "name": "Antigravity (AGY)",
+      "status": "operational",
+      "summary": "Operational · monitoring official AGY docs, CLI script, and forum.",
+      "source_url": "https://antigravity.google/",
+      "trust_level": "official",
+      "updated_at": "2026-11-26T03:55:52.857Z"
+    },
+    {
+      "id": "gemini-api",
+      "provider": "google",
+      "name": "Gemini API / AI Studio",
+      "status": "operational",
+      "summary": "Operational · no active Google Cloud AI incidents.",
+      "source_url": "https://status.cloud.google.com/",
+      "trust_level": "official",
+      "updated_at": "2026-11-26T03:55:52.857Z"
+    }
+  ],
+  "active_incidents": [],
+  "latest_versions": {
+    "gemini_cli": {
+      "latest": "0.71.1",
+      "preview": "0.72.0-preview.0",
+      "nightly": "0.71.0-nightly.20261124.gaafdfdfb5",
+      "source_url": "https://registry.npmjs.org/-/package/@google/gemini-cli/dist-tags"
+    },
+    "google_genai_pypi": {
+      "latest": "3.6.1",
+      "published_at": "2026-11-18T22:18:46.000Z",
+      "source_url": "https://pypi.org/rss/project/google-genai/releases.xml"
+    },
+    "agy_cli_script": {
+      "etag": "\"6b0779c7-1ddb\"",
+      "last_modified": "Thu, 26 Nov 2026 00:13:59 GMT",
+      "version_hint": null,
+      "source_url": "https://antigravity.google/cli/install.sh"
+    }
+  },
+  "sources_checked": [
+    {
+      "id": "agy-cli-install",
+      "url": "https://antigravity.google/cli/install.sh",
+      "ok": true,
+      "http_status": 304,
+      "not_modified": true,
+      "checked_at": "2026-11-26T03:55:52.882Z",
+      "error": null
+    },
+    {
+      "id": "workspace-status",
+      "url": "https://www.google.com/appsstatus/dashboard/incidents.json",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.884Z",
+      "error": null
+    },
+    {
+      "id": "cloud-status",
+      "url": "https://status.cloud.google.com/incidents.json",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.860Z",
+      "error": null
+    },
+    {
+      "id": "pypi-google-genai",
+      "url": "https://pypi.org/rss/project/google-genai/releases.xml",
+      "ok": true,
+      "http_status": 304,
+      "not_modified": true,
+      "checked_at": "2026-11-26T03:55:52.879Z",
+      "error": null
+    },
+    {
+      "id": "agy-changelog",
+      "url": "https://antigravity.google/docs/changelog",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.883Z",
+      "error": null
+    },
+    {
+      "id": "vertex-ai-xml",
+      "url": "https://docs.cloud.google.com/feeds/vertex-ai-product-group-release-notes.xml",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.879Z",
+      "error": null
+    },
+    {
+      "id": "npm-gemini-cli",
+      "url": "https://registry.npmjs.org/-/package/@google/gemini-cli/dist-tags",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.878Z",
+      "error": null
+    },
+    {
+      "id": "gemini-enterprise-xml",
+      "url": "https://docs.cloud.google.com/feeds/gemini-enterprise-release-notes.xml",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.880Z",
+      "error": null
+    },
+    {
+      "id": "github-gemini-cli",
+      "url": "https://github.com/google-gemini/gemini-cli/releases.atom",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.883Z",
+      "error": null
+    },
+    {
+      "id": "google-ai-blog",
+      "url": "https://blog.google/technology/ai/rss/",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.881Z",
+      "error": null
+    },
+    {
+      "id": "aistudio-changelog",
+      "url": "https://aistudio.google.com/docs/changelog",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.884Z",
+      "error": null
+    },
+    {
+      "id": "google-devs-blog",
+      "url": "https://developers.googleblog.com/feeds/posts/default?alt=rss",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.880Z",
+      "error": null
+    },
+    {
+      "id": "discourse-antigravity",
+      "url": "https://discuss.ai.google.dev/c/antigravity.rss",
+      "ok": true,
+      "http_status": 200,
+      "not_modified": false,
+      "checked_at": "2026-11-26T03:55:52.881Z",
+      "error": null
+    }
+  ]
+}

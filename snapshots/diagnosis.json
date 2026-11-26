@@ -1,0 +1,661 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-26T03:55:52.857Z",
+  "domains": [
+    {
+      "id": "quota",
+      "name": "Quota & Rate Limit",
+      "description": "429 RESOURCE_EXHAUSTED, limit: 0 billing/entitlement desync, 5h rolling window, 7d weekly shared-bucket exhaustion, and 10-min spend caps."
+    },
+    {
+      "id": "auth",
+      "name": "Auth & Entitlement",
+      "description": "401 UNAUTHENTICATED, 403 Permission Denied, OAuth vs API Key conflict, and stale GOOGLE_CLOUD_PROJECT bindings."
+    },
+    {
+      "id": "capacity",
+      "name": "Capacity & Timeout",
+      "description": "503 No capacity, 504 DEADLINE_EXCEEDED, Priority 0.3x limits, and oversized context stalls."
+    },
+    {
+      "id": "mcp",
+      "name": "MCP & Transport",
+      "description": "Silent MCP Disconnected states, untrusted directories, url vs httpUrl mismatch, EADDRINUSE, and stripped *KEY*/*TOKEN* env vars."
+    },
+    {
+      "id": "network",
+      "name": "Network & SSL Proxy",
+      "description": "Corporate TLS inspection, UNABLE_TO_GET_ISSUER_CERT_LOCALLY, proxy env mismatches, and connection resets."
+    },
+    {
+      "id": "protocol",
+      "name": "Structured Output & Function Calling",
+      "description": "Excessive JSON Schema nesting depth errors and broken multi-turn tool call / function_response state alignment."
+    }
+  ],
+  "entries": [
+    {
+      "id": "google-429-desync",
+      "slug": "429-desync",
+      "provider": "google",
+      "route_provider": "google",
+      "domain": "quota",
+      "title": "429 RESOURCE_EXHAUSTED with limit: 0 or Phantom Exhaustion",
+      "title_zh": "429 RESOURCE_EXHAUSTED（limit: 0 或假性耗尽）",
+      "severity": "critical",
+      "products": [
+        "agy",
+        "gemini-cli",
+        "gemini-api"
+      ],
+      "error_codes": [
+        "429",
+        "RESOURCE_EXHAUSTED",
+        "limit: 0"
+      ],
+      "error_patterns": [
+        "RESOURCE_EXHAUSTED",
+        "Quota exceeded for quota metric",
+        "limit: 0",
+        "429 Too Many Requests"
+      ],
+      "symptoms": [
+        "UI meter shows 95-99% quota remaining, yet requests immediately fail with 429.",
+        "API error payload reports `limit: 0` on a paid project or newly upgraded Pro/Ultra account.",
+        "Switching between OAuth login and `GEMINI_API_KEY` triggers sudden rate-limit errors."
+      ],
+      "root_cause": "Entitlement or billing project desync: rate limits apply per GCP project (not per API key), so an unbilled project (`limit: 0`), Tier 1 10-min $10 spend cap, or an accidental `GEMINI_API_KEY` env override causes immediate 429s.",
+      "root_cause_zh": "权益或计费项目失步：Gemini API 限流按 GCP Project（而非单个 API Key）计算。未绑定计费的项目（limit: 0）、Tier 1 的 10 分钟 $10 消费速率上限，或 Shell 中残留的 GEMINI_API_KEY 覆盖了 OAuth 订阅，都会触发假性 429。",
+      "steps": [
+        "Check whether `GEMINI_API_KEY` or `GOOGLE_API_KEY` is accidentally exported in your shell and overriding OAuth.",
+        "Inspect the 429 JSON `RetryInfo` and `quotaMetric`: if `limit: 0`, your selected GCP project lacks active billing or Free Tier eligibility.",
+        "In Antigravity / Gemini CLI, run Reset Onboarding or re-link the active paid Google Cloud billing project (verify Tier 1/2/3 spend cap).",
+        "Run `npx agycraft-mcp doctor` to verify env conflicts without exposing secret values."
+      ],
+      "steps_zh": [
+        "检查 Shell 是否意外导出了 GEMINI_API_KEY 或 GOOGLE_API_KEY，导致覆盖了 OAuth 订阅额度。",
+        "检查 429 载荷中的 RetryInfo 与 quotaMetric：若显示 limit: 0，说明当前 GCP 项目未启用有效计费或该区域无 Free 资格。",
+        "在 Antigravity / Gemini CLI 中执行 Reset Onboarding 或重新绑定已开启计费的 GCP 项目（核对 Tier 1 $10/10分钟消费上限）。",
+        "运行 `npx agycraft-mcp doctor` 在不泄露密钥值的前提下排查环境变量冲突。"
+      ],
+      "commands": [
+        {
+          "label": "Check env conflict (boolean only, never prints values)",
+          "os": "unix",
+          "command": "node -e '[\"GEMINI_API_KEY\",\"GOOGLE_API_KEY\",\"GOOGLE_CLOUD_PROJECT\"].forEach(k=>console.log(k, Boolean(process.env[k])))'"
+        },
+        {
+          "label": "Temporarily unset API key override to use OAuth plan",
+          "os": "unix",
+          "command": "unset GEMINI_API_KEY GOOGLE_API_KEY"
+        },
+        {
+          "label": "Run offline preflight audit",
+          "os": "all",
+          "command": "npx agycraft-mcp doctor"
+        }
+      ],
+      "verify_command": "gemini --version && npx agycraft-mcp doctor",
+      "dont_dos": [
+        "Do NOT spam rapid retries in a loop — repeated 429 bursts trigger abuse cooldowns.",
+        "Do NOT paste OAuth tokens or API keys into public issues or third-party quota checkers."
+      ],
+      "dont_dos_zh": [
+        "严禁死循环狂点重试，高频 429 突发请求会触发风控冷却。",
+        "严禁将 OAuth Token 或 API Key 粘贴到公开 Issue 或第三方查额度网站。"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "verified_version": "gemini-cli 0.71.1 / AGY v2.35.2",
+      "resolved_in_version": null,
+      "deep_link": "/fix/google/429-desync",
+      "official_source_url": "https://aistudio.google.com/docs/rate-limits",
+      "history": [
+        {
+          "date": "2026-11-26",
+          "note": "Verified per-project rate limiting and 10-min spend caps against aistudio.google.com/docs/rate-limits."
+        }
+      ]
+    },
+    {
+      "id": "google-weekly-cap",
+      "slug": "weekly-cap",
+      "provider": "google",
+      "route_provider": "google",
+      "domain": "quota",
+      "title": "Shared 5h Rolling Window or 7-Day Weekly Cap Reached",
+      "title_zh": "5 小时滚动窗口或 7 天周共享配额上限触顶",
+      "severity": "high",
+      "products": [
+        "agy",
+        "gemini-cli",
+        "gemini-web"
+      ],
+      "error_codes": [
+        "429",
+        "WEEKLY_LIMIT_EXCEEDED",
+        "RATE_LIMIT_EXCEEDED"
+      ],
+      "error_patterns": [
+        "weekly limit",
+        "5-hour",
+        "Try again later",
+        "reached your usage limit"
+      ],
+      "symptoms": [
+        "Heavy Neon or Carbon agent loops exhaust quota early in the 5h window.",
+        "Daily PT midnight passes, yet Antigravity still blocks frontier models due to the 7-day rolling weekly cap.",
+        "Single long uncompacted session burns tens of millions of uncached input tokens."
+      ],
+      "root_cause": "True shared-bucket exhaustion across the 5-hour rolling window or 7-day weekly ceiling. Note that implicit full-request KV caching requires >= 4,096 base tokens AND >= 2,050 new tokens added per multi-turn loop.",
+      "root_cause_zh": "5 小时滚动窗口或 7 天周共享桶真实耗尽。常见诱因包括用 Neon/Carbon 做机械改写、长会话未及时 /compact，或破坏了 4,096 Token 隐式缓存前缀（多轮需新增 >= 2,050 Token 才能完整缓存上一轮）。",
+      "steps": [
+        "Audit local 5h/7d burn and cache-hit warnings with `agycraft-mcp` (`analyze_token_usage` + `get_saving_recommendations`).",
+        "Run `/compact` immediately or switch mid-turn (AGY v2.35.2+) from Neon to Hydrogen.",
+        "Check `/usage` and `/credits` in Antigravity CLI to see whether AI Credit overages are set to `Never` or `Always`.",
+        "Add `.geminiignore` to exclude `node_modules`, build outputs, and lockfiles from context ingestion."
+      ],
+      "steps_zh": [
+        "通过 `agycraft-mcp`（`analyze_token_usage` + `get_saving_recommendations`）排查本机 5h/7d 消耗与缓存失效原因。",
+        "立即执行 `/compact` 压缩上下文，或利用 AGY v2.35.2+ 在轮次中将 Neon 切换为 Hydrogen。",
+        "在 AGY CLI 中运行 `/usage` 与 `/credits` 查看配额与 AI Credits 超额策略（Never / Always）。",
+        "维护 `.geminiignore` 排除 `node_modules`、构建产物与锁文件。"
+      ],
+      "commands": [
+        {
+          "label": "Run local quota & context hygiene check",
+          "os": "all",
+          "command": "npx agycraft-mcp doctor"
+        },
+        {
+          "label": "Create a minimal .geminiignore to stop context bloat",
+          "os": "unix",
+          "command": "printf 'node_modules/\\ndist/\\nbuild/\\n.git/\\n*.lock\\n' >> .geminiignore"
+        }
+      ],
+      "verify_command": "test -f .geminiignore && npx agycraft-mcp doctor",
+      "dont_dos": [
+        "Do NOT rotate multiple personal accounts or use gray-market proxy relays (violates Google ToS).",
+        "Do NOT leave an agent stuck in a failing test loop on Neon or Carbon overnight."
+      ],
+      "dont_dos_zh": [
+        "严禁多账号轮换或接入灰色反代中转（违反 Google 服务条款并有封号风险）。",
+        "严禁让 Neon/Carbon 在报错测试死循环中无人值守空转。"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "verified_version": "AGY v2.35.2 / Gemini Pro & Ultra",
+      "resolved_in_version": null,
+      "deep_link": "/fix/google/weekly-cap",
+      "official_source_url": "https://antigravity.google/docs/plans/",
+      "history": [
+        {
+          "date": "2026-11-26",
+          "note": "Added AGY v2.35.2 mid-turn switch and 2,050-token multi-turn cache rule."
+        }
+      ]
+    },
+    {
+      "id": "google-403-auth-mismatch",
+      "slug": "403-auth-mismatch",
+      "provider": "google",
+      "route_provider": "google",
+      "domain": "auth",
+      "title": "401 / 403 Permission Denied & OAuth / Project Mismatch",
+      "title_zh": "401 / 403 鉴权拒绝与 OAuth / GCP 项目失步",
+      "severity": "critical",
+      "products": [
+        "agy",
+        "gemini-cli",
+        "gemini-api"
+      ],
+      "error_codes": [
+        "401",
+        "403",
+        "UNAUTHENTICATED",
+        "PERMISSION_DENIED",
+        "ACCESS_TOKEN_TYPE_UNSUPPORTED"
+      ],
+      "error_patterns": [
+        "403 Permission Denied",
+        "401 UNAUTHENTICATED",
+        "cloudaicompanion",
+        "ACCESS_TOKEN_TYPE_UNSUPPORTED",
+        "Consumer 'projects/"
+      ],
+      "symptoms": [
+        "CLI or IDE throws `403 Permission Denied` or `cloudaicompanion...denied` after switching accounts.",
+        "`ACCESS_TOKEN_TYPE_UNSUPPORTED` when mixing Application Default Credentials with Consumer API endpoints.",
+        "Workspace/Enterprise admin account fails without `GOOGLE_CLOUD_PROJECT` set."
+      ],
+      "root_cause": "Stale OAuth grant, mismatched `GOOGLE_CLOUD_PROJECT`, or mixing an AI Studio API key with Vertex/ADC OAuth credentials.",
+      "root_cause_zh": "本地 OAuth 授权缓存过期、GOOGLE_CLOUD_PROJECT 绑定错位，或混用了 AI Studio API Key 与 Vertex/ADC OAuth 凭证。",
+      "steps": [
+        "Revoke the stale third-party/CLI app grant at `https://myaccount.google.com/connections` if switching Google accounts.",
+        "Clear local Gemini CLI / gcloud cached credentials (never print token contents).",
+        "Explicitly export `GOOGLE_CLOUD_PROJECT` when using Vertex AI or Workspace-managed seats.",
+        "Re-authenticate cleanly via `gcloud auth application-default login` or the built-in CLI login flow."
+      ],
+      "steps_zh": [
+        "若切换过 Google 账号，先前往 `https://myaccount.google.com/connections` 移除旧授权。",
+        "清理本机 Gemini CLI / gcloud 缓存凭证（严禁打印或外传凭证内容）。",
+        "使用 Vertex AI 或 Workspace 企业席位时，显式导出 `GOOGLE_CLOUD_PROJECT`。",
+        "重新执行 `gcloud auth application-default login` 或 CLI 内置登录流程。"
+      ],
+      "commands": [
+        {
+          "label": "Set explicit Google Cloud Project ID",
+          "os": "unix",
+          "command": "export GOOGLE_CLOUD_PROJECT=\"your-project-id\""
+        },
+        {
+          "label": "Re-authenticate Application Default Credentials",
+          "os": "all",
+          "command": "gcloud auth application-default login"
+        },
+        {
+          "label": "Clear Gemini CLI OAuth cache (macOS/Linux)",
+          "os": "unix",
+          "command": "rm -rf ~/.gemini/oauth_creds.json ~/.config/gemini-cli/auth*"
+        }
+      ],
+      "verify_command": "gcloud config get-value project && npx agycraft-mcp doctor",
+      "dont_dos": [
+        "Do NOT inspect, copy, or share `~/.gemini/oauth_creds.json` or `~/.config/gcloud/` contents.",
+        "Do NOT mix `GOOGLE_GENAI_USE_VERTEXAI=true` with a personal AI Studio `GEMINI_API_KEY`."
+      ],
+      "dont_dos_zh": [
+        "严禁读取、复制或分享 `~/.gemini/oauth_creds.json` 或 `~/.config/gcloud/` 内的凭证文件。",
+        "严禁将 `GOOGLE_GENAI_USE_VERTEXAI=true` 与个人 AI Studio API Key 混用。"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "verified_version": "gemini-cli 0.71.1 / gcloud 500+",
+      "resolved_in_version": null,
+      "deep_link": "/fix/google/403-auth-mismatch",
+      "official_source_url": "https://aistudio.google.com/docs/troubleshooting",
+      "history": [
+        {
+          "date": "2026-11-26",
+          "note": "Verified clean reset sequence for OAuth/ADC and GOOGLE_CLOUD_PROJECT."
+        }
+      ]
+    },
+    {
+      "id": "google-503-504-stall",
+      "slug": "503-504-stall",
+      "provider": "google",
+      "route_provider": "google",
+      "domain": "capacity",
+      "title": "503 No Capacity, 504 DEADLINE_EXCEEDED & Agent Stall",
+      "title_zh": "503 容量不足、504 请求超时与 Agent 卡死",
+      "severity": "high",
+      "products": [
+        "agy",
+        "gemini-cli",
+        "gemini-api"
+      ],
+      "error_codes": [
+        "503",
+        "504",
+        "UNAVAILABLE",
+        "DEADLINE_EXCEEDED"
+      ],
+      "error_patterns": [
+        "503",
+        "No capacity",
+        "The model is overloaded",
+        "504 DEADLINE_EXCEEDED",
+        "antigravity-unleash.goog"
+      ],
+      "symptoms": [
+        "Requests fail with `503 UNAVAILABLE` or `The model is overloaded` during peak US/EU hours.",
+        "Long prompt with `high`/`xhigh` Thinking budget hangs until `504 DEADLINE_EXCEEDED`.",
+        "Antigravity agent stalls on feature-flag or stream handshake (`antigravity-unleash.goog` timeout)."
+      ],
+      "root_cause": "Upstream Google Cloud / Vertex AI capacity wave, Priority inference hitting its 0.3x rate limit, or an oversized single-turn prompt with `high`/`xhigh` thinking exceeding the server deadline.",
+      "root_cause_zh": "上游云端容量波动、Priority 推理触及 0.3x 速率上限，或单轮超大上下文叠加 high/xhigh 深度思考导致服务端超时。",
+      "steps": [
+        "Check live upstream status on ModelCraft (`/`) or `status.cloud.google.com` first to confirm whether it is a global outage.",
+        "If upstream is operational, shrink the turn payload: run `/compact`, split the task into smaller batches, and lower Thinking level to `low` or `medium`.",
+        "Use AGY v2.35.2+ mid-turn model switch to step down from Neon/Carbon to Hydrogen during regional capacity spikes.",
+        "If AGY hangs on `antigravity-unleash.goog`, restart the session and verify outbound HTTPS connectivity."
+      ],
+      "steps_zh": [
+        "先查看 ModelCraft 首页状态灯或 `status.cloud.google.com`，确认是否为上游全局故障。",
+        "若上游正常，先执行 `/compact` 瘦身上下文、拆分大任务，并将 Thinking 降至 `low` 或 `medium`。",
+        "高峰期容量拥堵时，可在 AGY 中切换至 Hydrogen 避开前沿模型拥堵队列。",
+        "若卡在 `antigravity-unleash.goog` 特性开关握手，重启会话并检查出站 HTTPS 连通性。"
+      ],
+      "commands": [
+        {
+          "label": "Check Google Cloud Status incidents JSON directly",
+          "os": "unix",
+          "command": "curl -sS https://status.cloud.google.com/incidents.json | node -e 'const d=JSON.parse(require(\"fs\").readFileSync(0,\"utf8\")); console.log(\"Active:\", d.filter(i=>!i.end).length)'"
+        },
+        {
+          "label": "Verify TLS reachability to Gemini API endpoint",
+          "os": "unix",
+          "command": "curl -I -sS --max-time 8 https://generativelanguage.googleapis.com/ | head -n 5"
+        }
+      ],
+      "verify_command": "curl -I -sS --max-time 8 https://generativelanguage.googleapis.com/ | head -n 1",
+      "dont_dos": [
+        "Do NOT disable exponential backoff in custom API scripts during 503 waves.",
+        "Do NOT re-send a 500k-token uncached prompt repeatedly when 504 occurs — split the request instead."
+      ],
+      "dont_dos_zh": [
+        "503 波动期间严禁关闭自定义脚本的指数退避重试。",
+        "遇到 504 超时不要原样重发 500k+ 超大上下文，应拆分请求。"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "verified_version": "Gemini API v1beta / AGY v2.35.2",
+      "resolved_in_version": null,
+      "deep_link": "/fix/google/503-504-stall",
+      "official_source_url": "https://status.cloud.google.com/",
+      "history": [
+        {
+          "date": "2026-11-26",
+          "note": "Added Priority inference 0.3x note and AGY v2.35.2 mid-turn switch advice."
+        }
+      ]
+    },
+    {
+      "id": "agy-mcp-disconnected",
+      "slug": "mcp-disconnected",
+      "provider": "antigravity",
+      "route_provider": "agy",
+      "domain": "mcp",
+      "title": "MCP Server Shows Disconnected, EADDRINUSE, or Missing Env Vars",
+      "title_zh": "MCP 显示 Disconnected、端口占用或环境变量被剥离",
+      "severity": "high",
+      "products": [
+        "agy",
+        "gemini-cli"
+      ],
+      "error_codes": [
+        "MCP_DISCONNECTED",
+        "EADDRINUSE",
+        "ENOENT"
+      ],
+      "error_patterns": [
+        "Disconnected",
+        "EADDRINUSE",
+        "MCP server failed to start",
+        "untrusted directory",
+        "httpUrl"
+      ],
+      "symptoms": [
+        "MCP server silently shows `Disconnected` in Antigravity or `gemini mcp list`.",
+        "Remote Streamable HTTP MCP fails because `url` (SSE) was configured instead of `httpUrl`.",
+        "MCP subprocess cannot see `*_KEY`, `*_TOKEN`, or `*_SECRET` environment variables."
+      ],
+      "root_cause": "Workspace directory is untrusted, JSON syntax or transport key (`url` vs `httpUrl`) is mismatched, port is already occupied (`EADDRINUSE`), or the CLI security sanitizer stripped `*KEY*`/`*TOKEN*`/`*SECRET*` env vars not explicitly declared in the server `env` block.",
+      "root_cause_zh": "工作区目录尚未信任、配置文件语法或传输键名（SSE 用 `url`、Streamable HTTP 用 `httpUrl`）错配、端口被占用（EADDRINUSE），或 `*KEY*`/`*TOKEN*`/`*SECRET*` 环境变量未显式写入 MCP `env` 块而被安全机制剥离。",
+      "steps": [
+        "Run `npx agycraft-mcp doctor` offline to lint `mcp_config.json` / `.gemini/settings.json`, check `url` vs `httpUrl`, and detect stripped env patterns.",
+        "Trust the current workspace directory (`gemini trust`) if running in a newly cloned repo.",
+        "Use `url` strictly for legacy SSE servers and `httpUrl` for Streamable HTTP MCP endpoints.",
+        "Explicitly declare required config keys or `${ENV_VAR}` references inside the MCP server's `env` block."
+      ],
+      "steps_zh": [
+        "先运行 `npx agycraft-mcp doctor` 离线检查 `mcp_config.json` / `.gemini/settings.json` 语法、`url` 与 `httpUrl` 错配及环境变量剥离风险。",
+        "在新克隆目录中执行 `gemini trust` 信任当前工作区。",
+        "确认远程传输键名：SSE 服务端用 `url`，Streamable HTTP 服务端用 `httpUrl`。",
+        "在 MCP Server 配置的 `env` 块中显式声明所需变量引用（如 `${ENV_VAR}`）。"
+      ],
+      "commands": [
+        {
+          "label": "Run agycraft offline MCP & config doctor",
+          "os": "all",
+          "command": "npx agycraft-mcp doctor"
+        },
+        {
+          "label": "List registered MCP servers and live connection states",
+          "os": "all",
+          "command": "gemini mcp list"
+        },
+        {
+          "label": "Check occupied local port (replace 3000 with your MCP port)",
+          "os": "unix",
+          "command": "lsof -i :3000 -sTCP:LISTEN"
+        }
+      ],
+      "verify_command": "gemini mcp list",
+      "dont_dos": [
+        "Do NOT write raw API keys directly into git-tracked `.gemini/settings.json`.",
+        "Do NOT print `stdout` logs inside a stdio MCP server (use `stderr` only, otherwise JSON-RPC framing breaks)."
+      ],
+      "dont_dos_zh": [
+        "严禁将明文 API Key 直接写入受 Git 追踪的 `.gemini/settings.json`。",
+        "Stdio MCP 服务端严禁向 `stdout` 打印普通日志（必须走 `stderr`，否则会破坏 JSON-RPC 帧）。"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "verified_version": "AGY v2.35.2 / gemini-cli 0.71.1",
+      "resolved_in_version": null,
+      "deep_link": "/fix/agy/mcp-disconnected",
+      "official_source_url": "https://antigravity.google/docs/mcp/",
+      "history": [
+        {
+          "date": "2026-11-26",
+          "note": "Linked official antigravity.google/docs/mcp/ reference."
+        }
+      ]
+    },
+    {
+      "id": "agy-ssl-proxy",
+      "slug": "ssl-proxy",
+      "provider": "antigravity",
+      "route_provider": "agy",
+      "domain": "network",
+      "title": "UNABLE_TO_GET_ISSUER_CERT_LOCALLY & Corporate Proxy Reset",
+      "title_zh": "企业代理证书报错（UNABLE_TO_GET_ISSUER_CERT_LOCALLY）",
+      "severity": "medium",
+      "products": [
+        "agy",
+        "gemini-cli",
+        "gemini-api"
+      ],
+      "error_codes": [
+        "UNABLE_TO_GET_ISSUER_CERT_LOCALLY",
+        "ECONNRESET",
+        "SELF_SIGNED_CERT_IN_CHAIN"
+      ],
+      "error_patterns": [
+        "UNABLE_TO_GET_ISSUER_CERT_LOCALLY",
+        "SELF_SIGNED_CERT_IN_CHAIN",
+        "ECONNRESET",
+        "unable to verify the first certificate"
+      ],
+      "symptoms": [
+        "Node-based CLI or MCP fails TLS handshake behind Zscaler, Netskope, or corporate MITM proxy.",
+        "Browser works normally, but `gemini` CLI and `npx agycraft-mcp` fail with certificate chain errors."
+      ],
+      "root_cause": "Node.js ships its own bundled CA store and ignores the OS corporate root CA unless `NODE_EXTRA_CA_CERTS` points to a readable PEM bundle, or `HTTPS_PROXY` is misconfigured.",
+      "root_cause_zh": "Node.js 默认使用内置 CA 证书库，会忽略系统企业根证书，必须通过 `NODE_EXTRA_CA_CERTS` 指定可读的 PEM 证书链并核对 `HTTPS_PROXY`。",
+      "steps": [
+        "Export your organization's root CA certificate in PEM format (`.crt` / `.pem`).",
+        "Set `NODE_EXTRA_CA_CERTS` to the absolute path of that PEM file in your shell profile.",
+        "Verify `HTTPS_PROXY` / `NO_PROXY` formatting (include scheme `http://` or `https://`).",
+        "Confirm readability with `npx agycraft-mcp doctor`."
+      ],
+      "steps_zh": [
+        "导出企业根证书并确保为 Base64 PEM 格式（`.crt` / `.pem`）。",
+        "在 Shell 配置中设置 `NODE_EXTRA_CA_CERTS` 指向该证书的绝对路径。",
+        "检查 `HTTPS_PROXY` / `NO_PROXY` 格式（需包含 `http://` 或 `https://` 协议头）。",
+        "运行 `npx agycraft-mcp doctor` 验证证书路径可读性。"
+      ],
+      "commands": [
+        {
+          "label": "Configure Node extra CA bundle (macOS/Linux)",
+          "os": "unix",
+          "command": "export NODE_EXTRA_CA_CERTS=\"/path/to/corporate-root-ca.pem\""
+        },
+        {
+          "label": "Configure Node extra CA bundle (PowerShell)",
+          "os": "windows",
+          "command": "$env:NODE_EXTRA_CA_CERTS=\"C:\\certs\\corporate-root-ca.pem\""
+        },
+        {
+          "label": "Test TLS with Node native fetch",
+          "os": "all",
+          "command": "node -e 'fetch(\"https://registry.npmjs.org/-/ping\").then(r=>console.log(\"HTTP\", r.status))'"
+        }
+      ],
+      "verify_command": "node -e 'fetch(\"https://registry.npmjs.org/-/ping\").then(r=>console.log(\"OK\", r.status))'",
+      "dont_dos": [
+        "Do NOT set `NODE_TLS_REJECT_UNAUTHORIZED=0` globally — it disables TLS verification for all Node processes.",
+        "Do NOT point `NODE_EXTRA_CA_CERTS` to a DER binary file (it must be base64 PEM)."
+      ],
+      "dont_dos_zh": [
+        "严禁全局设置 `NODE_TLS_REJECT_UNAUTHORIZED=0` 关闭证书校验。",
+        "不要将 `NODE_EXTRA_CA_CERTS` 指向二进制 DER 证书（必须为 PEM 文本格式）。"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "verified_version": "Node.js 22 LTS / AGY v2.35.2",
+      "resolved_in_version": null,
+      "deep_link": "/fix/agy/ssl-proxy",
+      "official_source_url": "https://nodejs.org/api/cli.html#node_extra_ca_certsfile",
+      "history": [
+        {
+          "date": "2026-11-26",
+          "note": "Verified Node 22 native fetch + NODE_EXTRA_CA_CERTS resolution."
+        }
+      ]
+    },
+    {
+      "id": "google-structured-output-schema",
+      "slug": "structured-output-schema",
+      "provider": "google",
+      "route_provider": "google",
+      "domain": "protocol",
+      "title": "400 INVALID_ARGUMENT: Structured Output Schema Too Complex / Deeply Nested",
+      "title_zh": "400 INVALID_ARGUMENT：结构化输出 Schema 嵌套过深或状态过多",
+      "severity": "medium",
+      "products": [
+        "gemini-api",
+        "agy"
+      ],
+      "error_codes": [
+        "400",
+        "INVALID_ARGUMENT"
+      ],
+      "error_patterns": [
+        "The specified schema produces a constraint that has too many states",
+        "nesting depth",
+        "response_schema",
+        "INVALID_ARGUMENT"
+      ],
+      "symptoms": [
+        "Gemini API rejects `responseSchema` with `400 INVALID_ARGUMENT` mentioning too many states or excessive nesting.",
+        "Large Zod/Pydantic unions (`anyOf` / recursive types) fail constrained decoding compilation."
+      ],
+      "root_cause": "Constrained decoding compiles the JSON Schema into a finite-state machine; deeply nested objects, recursive `$ref`, or wide `anyOf` unions exceed the state budget.",
+      "root_cause_zh": "受限解码会将 JSON Schema 编译为有限状态机；嵌套过深、递归 `$ref` 或过宽的 `anyOf` 联合类型会超出状态机编译上限。",
+      "steps": [
+        "Flatten nested objects to <= 4 levels and replace wide `anyOf` unions with a discriminated string enum + flat optional fields.",
+        "Remove unsupported keywords (recursive `$ref` or huge `enum` lists).",
+        "Use Interactions API `defer_loading: true` + `tool_search` (Nov 19, 2026) when attaching large tool schema libraries."
+      ],
+      "steps_zh": [
+        "将嵌套层级压平至 <= 4 层，并用枚举标识字段 + 扁平可选字段替代复杂的 `anyOf` 联合。",
+        "移除递归 `$ref` 或包含数百项的超大 `enum` 列表。",
+        "若因挂载大量工具导致 Schema 膨胀，可在 Interactions API 中开启 Tool Retrieval（`defer_loading: true` + `tool_search`）。"
+      ],
+      "commands": [
+        {
+          "label": "Inspect JSON Schema nesting depth quickly with Node",
+          "os": "all",
+          "command": "node -e 'const fs=require(\"fs\"); const d=(o,n=0)=>o&&typeof o===\"object\"?Math.max(n,...Object.values(o).map(v=>d(v,n+1))):n; console.log(\"Max depth:\", d(JSON.parse(fs.readFileSync(process.argv[1],\"utf8\"))))' schema.json"
+        }
+      ],
+      "verify_command": "node -e 'console.log(\"Validate flattened schema against Gemini API test prompt\")'",
+      "dont_dos": [
+        "Do NOT pass recursive TypeScript/Zod AST schemas directly into `responseSchema`.",
+        "Do NOT embed hundreds of dynamic IDs inside a schema `enum` array."
+      ],
+      "dont_dos_zh": [
+        "严禁将递归 TypeScript/Zod AST Schema 直接传入 `responseSchema`。",
+        "不要在 Schema 的 `enum` 数组中硬编码数百个动态 ID。"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "verified_version": "Gemini API v1beta / google-genai 3.6.1",
+      "resolved_in_version": null,
+      "deep_link": "/fix/google/structured-output-schema",
+      "official_source_url": "https://aistudio.google.com/docs/structured-output",
+      "history": [
+        {
+          "date": "2026-11-26",
+          "note": "Updated with Interactions API Tool Retrieval (defer_loading) guidance."
+        }
+      ]
+    },
+    {
+      "id": "google-function-calling-state",
+      "slug": "function-calling-state",
+      "provider": "google",
+      "route_provider": "google",
+      "domain": "protocol",
+      "title": "400 Function Call / Function Response Turn Alignment Error",
+      "title_zh": "400 Function Call / Function Response 轮次状态不对齐",
+      "severity": "medium",
+      "products": [
+        "gemini-api",
+        "agy",
+        "gemini-cli"
+      ],
+      "error_codes": [
+        "400",
+        "INVALID_ARGUMENT",
+        "MALFORMED_FUNCTION_CALL"
+      ],
+      "error_patterns": [
+        "Please ensure that function response turn comes immediately after a function call turn",
+        "MALFORMED_FUNCTION_CALL",
+        "function_response",
+        "thought_signature"
+      ],
+      "symptoms": [
+        "Multi-turn agent fails with `400 INVALID_ARGUMENT` stating function response turn must immediately follow function call turn.",
+        "Truncating conversation history mid-tool-loop leaves an orphaned `functionCall` or `functionResponse`.",
+        "Missing `thought_signature` when replaying thinking-enabled function call turns."
+      ],
+      "root_cause": "Gemini requires strict 1:1 pairing between model `functionCall` parts and the immediately following `functionResponse` parts (preserving `thought_signature` on thinking models). Naive history trimming breaks this invariant.",
+      "root_cause_zh": "Gemini 要求模型的 `functionCall` 轮次必须紧跟对应的 `functionResponse` 轮次（且思考模型须原样保留 `thought_signature`）。按条数机械截断历史记录会破坏该不变量。",
+      "steps": [
+        "Ensure every `functionCall` turn is followed immediately by matching `functionResponse` parts with identical function names/IDs.",
+        "When compacting or sliding conversation history, always slice on complete user->model->tool->model boundaries.",
+        "Preserve raw model parts (including `thought_signature`) verbatim when sending multi-turn history back to Gemini 4 models."
+      ],
+      "steps_zh": [
+        "确保每个 `functionCall` 轮次后紧跟名称与 ID 完全匹配的 `functionResponse`。",
+        "裁剪或压缩会话历史时，必须按完整的 `user -> model -> tool -> model` 事务边界切分。",
+        "回传 Gemini 4 思考模型历史消息时，原样保留包含 `thought_signature` 在内的模型 Parts。"
+      ],
+      "commands": [
+        {
+          "label": "Run agycraft doctor to check MCP tool schema & transcript loop health",
+          "os": "all",
+          "command": "npx agycraft-mcp doctor"
+        }
+      ],
+      "verify_command": "npx agycraft-mcp doctor",
+      "dont_dos": [
+        "Do NOT strip `thought_signature` fields when serializing Gemini 4 tool-calling turns.",
+        "Do NOT inject a `user` text message between a pending `functionCall` and its `functionResponse`."
+      ],
+      "dont_dos_zh": [
+        "序列化 Gemini 4 工具调用历史时严禁剥离 `thought_signature` 字段。",
+        "不要在未完成的 `functionCall` 与其 `functionResponse` 之间插入 `user` 文本消息。"
+      ],
+      "verified_at": "2026-11-26T04:00:00.000Z",
+      "verified_version": "Gemini API v1beta / Gemini 4 Thinking",
+      "resolved_in_version": null,
+      "deep_link": "/fix/google/function-calling-state",
+      "official_source_url": "https://aistudio.google.com/docs/function-calling",
+      "history": [
+        {
+          "date": "2026-11-26",
+          "note": "Verified official aistudio.google.com/docs/function-calling link and zh translations."
+        }
+      ]
+    }
+  ]
+}
