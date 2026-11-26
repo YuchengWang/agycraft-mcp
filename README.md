@@ -84,9 +84,15 @@ npx -y agycraft-mcp clear-local-data
 ## Development
 
 ```bash
-pnpm install
-pnpm build
+git clone https://github.com/YuchengWang/agycraft-mcp.git && cd agycraft-mcp && pnpm install && pnpm build && node dist/index.js doctor
+```
+
+Run tests and typechecking:
+
+```bash
+pnpm typecheck
 pnpm test
+pnpm build
 ```
 
 ## License

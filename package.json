@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "description": "Privacy-first local MCP server & CLI doctor for Antigravity (AGY) and Gemini CLI — token usage audit, KV cache diagnostics, error attribution, and model selection.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YuchengWang/agycraft-mcp.git"
+  },
+  "homepage": "https://github.com/YuchengWang/agycraft-mcp",
   "type": "module",
   "engines": {
     "node": ">=22.0.0"
